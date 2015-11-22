@@ -36,19 +36,21 @@ class World(ShowBase):
     def __init__(self):
 
 
+        pipeline_path = "../../"
+        # pipeline_path = "../../RenderPipeline/"
+
         # -- Begin of render pipeline code --
-        sys.path.insert(0, "../../")
+        sys.path.insert(0, pipeline_path)
         from __init__ import RenderPipeline
 
         self.render_pipeline = RenderPipeline(self)
         self.render_pipeline.set_default_loading_screen()
 
-        # Set the base path and mount the directories
-        self.render_pipeline.get_mount_manager().set_base_path("../../")
+        # Mount the directories, this mounts the base path of the pipeline so
+        # we don't have to speficy relative paths all the time
         self.render_pipeline.get_mount_manager().mount()
 
-       # Load the default prc file and settings
-        load_prc_file("Config/configuration.prc")
+        # Load the default settings
         self.render_pipeline.load_settings("Config/pipeline.yaml")
 
         # Create the pipeline
