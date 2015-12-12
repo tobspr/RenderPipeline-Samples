@@ -35,30 +35,23 @@ class World(ShowBase):
 
     def __init__(self):
 
+        # ------ Begin of render pipeline code ------
 
+        # Insert the pipeline path to the system path, this is required to be
+        # able to import the pipeline classes
         pipeline_path = "../../"
         # pipeline_path = "../../RenderPipeline/"
-
-        # -- Begin of render pipeline code --
         sys.path.insert(0, pipeline_path)
+
         from __init__ import RenderPipeline
 
         self.render_pipeline = RenderPipeline(self)
-        self.render_pipeline.set_default_loading_screen()
-
-        # Mount the directories, this mounts the base path of the pipeline so
-        # we don't have to speficy relative paths all the time
-        self.render_pipeline.get_mount_manager().mount()
-
-        # Load the default settings
-        self.render_pipeline.load_settings("Config/pipeline.yaml")
-
-        # Create the pipeline
         self.render_pipeline.create()
+
+        # [Optional] use the default skybox, you can use your own skybox as well
         self.render_pipeline.create_default_skybox()
 
-        # -- end of render pipeline code, thats it! --
-
+        # ------ End of render pipeline code, thats it! ------
 
 
         
