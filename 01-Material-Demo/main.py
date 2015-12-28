@@ -67,7 +67,7 @@ class MainApp(ShowBase):
                 light = SpotLight()
                 light.set_direction(0, 0, -1)
                 light.set_fov(110)
-                light.set_color(Vec3(1, 1, 1.5) * 10.0)
+                light.set_color(Vec3(1, 1, 1.5) * 200.0)
                 pos_x, pos_y = (x-sqr//2) * 7.0 + 5.0, (y-sqr//2) * 7.0
                 light.set_pos(Vec3(pos_x, pos_y, 7.0))
                 light.set_radius(25.0)
