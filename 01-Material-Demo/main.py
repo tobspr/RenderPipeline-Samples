@@ -37,7 +37,12 @@ class MainApp(ShowBase):
         # Insert the pipeline path to the system path, this is required to be
         # able to import the pipeline classes
         pipeline_path = "../../"
-        # pipeline_path = "../../RenderPipeline/"
+
+        # Just a special case for my development setup, so I don't accidentally
+        # commit a wrong path. You can remove this in your own programs.
+        if not os.path.isfile(os.path.join(pipeline_path, "setup.py")):
+            pipeline_path = "../../RenderPipeline/"
+            
         sys.path.insert(0, pipeline_path)
 
         from __init__ import RenderPipeline, SpotLight
@@ -53,7 +58,7 @@ class MainApp(ShowBase):
 
 
         # Set time of day
-        self.render_pipeline.get_daytime_mgr().set_time(0.651)
+        self.render_pipeline.get_daytime_mgr().set_time(0.655)
 
         # Load the scene
         model = loader.loadModel("scene/TestScene.bam")
@@ -81,7 +86,7 @@ class MainApp(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(0, 25, 6), Vec3(0))
+        self.controller.set_initial_position(Vec3(3, 25, 8), Vec3(5, 0, 0))
         self.controller.setup()
         
 MainApp().run()
