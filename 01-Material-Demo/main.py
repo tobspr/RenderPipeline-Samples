@@ -36,8 +36,8 @@ class MainApp(ShowBase):
 
         # Insert the pipeline path to the system path, this is required to be
         # able to import the pipeline classes
-        pipeline_path = "../../"
-        # pipeline_path = "../../RenderPipeline/"
+        # pipeline_path = "../../"
+        pipeline_path = "../../RenderPipeline/"
         sys.path.insert(0, pipeline_path)
 
         from __init__ import RenderPipeline, SpotLight
@@ -51,6 +51,9 @@ class MainApp(ShowBase):
 
         # ------ End of render pipeline code, thats it! ------
 
+
+        # Set time of day
+        self.render_pipeline.get_daytime_mgr().set_time(0.651)
 
         # Load the scene
         model = loader.loadModel("scene/TestScene.bam")
