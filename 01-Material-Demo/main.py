@@ -73,15 +73,17 @@ class MainApp(ShowBase):
         for x in range(sqr):
             for y in range(sqr):
                 light = SpotLight()
-                light.set_direction(0, 0, -1)
-                light.set_fov(110)
-                light.set_color(Vec3(1, 1, 1.5) * 200.0)
+                light.direction = (0, 0, -1)
+                light.fov = 110.0
+                light.color = (1, 1, 1.5)
+                light.lumens = 200.0
                 pos_x, pos_y = (x-sqr//2) * 7.0 + 5.0, (y-sqr//2) * 7.0
-                light.set_pos(Vec3(pos_x, pos_y, 7.0))
-                light.set_radius(25.0)
-                light.set_casts_shadows(True)
-                light.set_shadow_map_resolution(1024)
-                light.set_ies_profile(ies_profile)
+                light.pos = (pos_x, pos_y, 12.0)
+                light.radius = 25.0
+                light.casts_shadows = True
+                light.near_plane = 0.1
+                light.shadow_map_resolution = 1024
+                # light.ies_profile = ies_profile
                 self.render_pipeline.add_light(light)
 
         # Init movement controller
