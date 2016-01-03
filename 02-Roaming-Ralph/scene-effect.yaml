@@ -1,0 +1,21 @@
+
+# Special effect file for rendering the roaming ralph scene, since roaming
+# Ralph has no normals or material information
+
+Vertex:
+    template: default
+
+Fragment.GBuffer:
+    template: default
+    inject:
+        material:
+            m.roughness = 0.8;
+            m.specular = 0.5;
+            m.metallic = 0;
+            m.normal = vOutput.normal;
+
+Fragment.Shadows:
+    template: default
+
+Fragment.Voxelize:
+    template: default
