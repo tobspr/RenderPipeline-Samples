@@ -64,11 +64,14 @@ class MainApp(ShowBase):
         model = loader.loadModel("scene/TestScene.bam")
         model.reparent_to(render)
 
+        # Enable parallax mapping for the floor
+
+
         # Load some fancy ies profile
         ies_profile = self.render_pipeline.load_ies_profile("Data/IESProfiles/Defined.ies")
         
         # Add some random lights
-        sqr = 3
+        sqr = 2
         seed(3)
         for x in range(sqr):
             for y in range(sqr):
@@ -77,12 +80,12 @@ class MainApp(ShowBase):
                 light.fov = 110.0
                 light.color = (1, 1, 1.5)
                 light.lumens = 1.0
-                pos_x, pos_y = (x-sqr//2) * 7.0 + 5.0, (y-sqr//2) * 7.0
+                pos_x, pos_y = (x-sqr//2) * 7.0 + 5.0, (y-sqr//2) * 7.0 + 5.0
                 light.pos = (pos_x, pos_y, 12.0)
                 light.radius = 35.0
                 light.casts_shadows = True
                 light.near_plane = 0.1
-                light.shadow_map_resolution = 1024
+                light.shadow_map_resolution = 512
                 # light.ies_profile = ies_profile
                 self.render_pipeline.add_light(light)
 
