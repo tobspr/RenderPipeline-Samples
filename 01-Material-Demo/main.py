@@ -76,10 +76,10 @@ class MainApp(ShowBase):
                 light.direction = (0, 0, -1)
                 light.fov = 110.0
                 light.color = (1, 1, 1.5)
-                light.lumens = 10.0
+                light.lumens = 2.0
                 pos_x, pos_y = (x-sqr//2) * 7.0 + 5.0, (y-sqr//2) * 7.0
                 light.pos = (pos_x, pos_y, 12.0)
-                light.radius = 25.0
+                light.radius = 35.0
                 light.casts_shadows = True
                 light.near_plane = 0.1
                 light.shadow_map_resolution = 1024
