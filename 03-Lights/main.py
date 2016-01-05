@@ -73,7 +73,18 @@ class MainApp(ShowBase):
             light.lumens = 500.0
             light.pos = lumlamp.get_pos(self.render)
             light.radius = 10
+            light.casts_shadows = True
+            light.shadow_map_resolution = 512
             self.render_pipeline.add_light(light)
+
+            panda = loader.loadModel("panda")
+            panda.reparent_to(render)
+            panda.set_pos(light.pos)
+            panda.set_z(0.65)
+            panda.set_h(180 + randint(-60, 60))
+            panda.set_scale(0.2)
+            panda.set_y(panda.get_y() + 1.0)
+
 
         # Load some fancy ies profile
         # ies_profile = self.render_pipeline.load_ies_profile("Data/IESProfiles/Defined.ies")
