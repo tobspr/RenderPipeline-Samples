@@ -9,7 +9,7 @@ import os
 import sys
 import math
 from random import random, randint, seed
-from panda3d.core import Vec3, load_prc_file_data
+from panda3d.core import Vec3, load_prc_file_data, TextureAttrib
 from direct.showbase.ShowBase import ShowBase
 
 # Change to the current directory
@@ -27,7 +27,7 @@ class MainApp(ShowBase):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-        win-size 1920 1080
+        win-size 1600 900
         window-title Render Pipeline by tobspr 
         icon-filename Data/GUI/icon.ico
         """)
@@ -56,39 +56,25 @@ class MainApp(ShowBase):
 
         # ------ End of render pipeline code, thats it! ------
 
-
-        # Set time of day
-        self.render_pipeline.get_daytime_mgr().set_time(0.655)
+        # Load ground plane
+        plane = self.loader.loadModel("Data/BuiltinModels/Plane/Plane.bam")
+        plane.set_scale(10.0)
+        plane.reparent_to(self.render)
 
         # Load the scene
-        model = loader.loadModel("scene/TestScene.bam")
+        model = loader.loadModel("scene/Scene.bam")
         model.reparent_to(render)
+        model.set_z(1)
 
-        # Load some fancy ies profile
-        ies_profile = self.render_pipeline.load_ies_profile("Data/IESProfiles/Defined.ies")
-        
-        # Add some random lights
-        sqr = 2
-        seed(3)
-        for x in range(sqr):
-            for y in range(sqr):
-                light = SpotLight()
-                light.direction = (0, 0, -1)
-                light.fov = 110.0
-                light.color = (1, 1, 1.5)
-                light.lumens = 1.0
-                pos_x, pos_y = (x-sqr//2) * 7.0 + 5.0, (y-sqr//2) * 7.0 + 5.0
-                light.pos = (pos_x, pos_y, 12.0)
-                light.radius = 35.0
-                light.casts_shadows = True
-                light.near_plane = 0.1
-                light.shadow_map_resolution = 512
-                # light.ies_profile = ies_profile
-                self.render_pipeline.add_light(light)
+        self.render_pipeline.set_effect(model, "Effects/MaterialBlend4.yaml", {
+                "parallax_mapping": False, # Not supported
+                "alpha_testing": False,
+                "normal_mapping": False, # The effect does its own normal mapping
+            })
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(3, 25, 8), Vec3(5, 0, 0))
+        self.controller.set_initial_position(Vec3(0, 10, 8), Vec3(0, 0, 0))
         self.controller.setup()
         
 MainApp().run()
