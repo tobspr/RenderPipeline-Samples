@@ -46,7 +46,7 @@ class GameControl(ShowBase):
 
         # Set custom configuration directory
         cfg_dir = os.path.join(os.getcwd(), "config/")
-        self.render_pipeline.get_mount_mgr().set_config_dir(cfg_dir)
+        self.render_pipeline.mount_mgr.set_config_dir(cfg_dir)
         self.render_pipeline.set_empty_loading_screen()
         self.render_pipeline.create()
 
@@ -56,7 +56,7 @@ class GameControl(ShowBase):
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.get_daytime_mgr().set_time(0.5)
+        self.render_pipeline.daytime_mgr.set_time(0.5)
 
         self.menu = Menu(self)
         self.level = Level(self)
