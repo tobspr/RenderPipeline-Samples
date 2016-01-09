@@ -47,7 +47,7 @@ class GameControl(ShowBase):
         # Set custom configuration directory
         cfg_dir = os.path.join(os.getcwd(), "config/")
         self.render_pipeline.get_mount_mgr().set_config_dir(cfg_dir)
-
+        self.render_pipeline.set_empty_loading_screen()
         self.render_pipeline.create()
 
         # [Optional] use the default skybox, you can use your own skybox as well
