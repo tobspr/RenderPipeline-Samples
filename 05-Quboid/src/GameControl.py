@@ -43,7 +43,10 @@ class GameControl(ShowBase):
         from Code.Util.MovementController import MovementController
 
         self.render_pipeline = RenderPipeline(self)
-        self.render_pipeline.
+
+        # Set custom configuration directory
+        cfg_dir = os.path.join(os.getcwd(), "config/")
+        self.render_pipeline.get_mount_mgr().set_config_dir(cfg_dir)
 
         self.render_pipeline.create()
 
