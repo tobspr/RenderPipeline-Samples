@@ -35,13 +35,16 @@ class GameControl(ShowBase):
         # commit a wrong path. You can remove this in your own programs.
         if not os.path.isfile(os.path.join(pipeline_path, "setup.py")):
             pipeline_path = "../../RenderPipeline/"
-            
+
         sys.path.insert(0, pipeline_path)
 
-        from __init__ import RenderPipeline, SpotLight
+        # Use the utility script to import the render pipeline classes
+        from render_pipeline_importer import RenderPipeline
         from Code.Util.MovementController import MovementController
 
         self.render_pipeline = RenderPipeline(self)
+        self.render_pipeline.
+
         self.render_pipeline.create()
 
         # [Optional] use the default skybox, you can use your own skybox as well
