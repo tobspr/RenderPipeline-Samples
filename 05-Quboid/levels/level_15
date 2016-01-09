@@ -1,0 +1,17 @@
+<Type=tile,Pos=0_14><Type=tile,Pos=1_14>
+<Type=tile,Pos=1_15><Type=tile,Pos=1_16><Type=tile,Pos=2_14>
+<Type=tile,Pos=2_15><Type=tile,Pos=2_16><Type=tile,Pos=3_14>
+<Type=tile,Pos=3_15><Type=tile,Pos=3_16><Type=tile,Pos=4_14>
+<Type=tile,Pos=5_11>
+<Type=tile,Pos=5_12><Type=tile,Pos=5_13><Type=tile,Pos=5_14><Type=tile,Pos=6_11>
+<Type=tile,Pos=6_12><Type=tile,Pos=6_13><Type=start,Pos=6_14><Type=tile,Pos=7_11>
+<Type=tile,Pos=8_6>
+<Type=tile,Pos=8_7><Type=tile,Pos=8_8><Type=tile,Pos=8_9><Type=tile,Pos=8_10><Type=tile,Pos=8_11><Type=tile,Pos=9_6>
+<Type=tile,Pos=9_7><Type=tile,Pos=10_3>
+<Type=tile,Pos=10_4><Type=tile,Pos=10_5><Type=tile,Pos=10_6><Type=tile,Pos=10_7><Type=tile,Pos=11_6>
+<Type=tile,Pos=11_7><Type=tile,Pos=11_8><Type=tile,Pos=11_9><Type=tile,Pos=12_1>
+<Type=tile,Pos=12_2><Type=tile,Pos=12_6><Type=tile,Pos=12_7><Type=tile,Pos=12_8><Type=tile,Pos=12_9><Type=tile,Pos=13_1>
+<Type=tile,Pos=13_2><Type=tile,Pos=13_3><Type=tile,Pos=13_4><Type=tile,Pos=13_6><Type=tile,Pos=13_7><Type=tile,Pos=13_8><Type=tile,Pos=14_0>
+<Type=tile,Pos=14_1><Type=goal,Pos=14_2><Type=tile,Pos=14_3><Type=tile,Pos=14_4><Type=tile,Pos=14_6><Type=tile,Pos=14_7><Type=tile,Pos=15_3>
+<Type=tile,Pos=15_4><Type=tile,Pos=15_6><Type=tile,Pos=15_7><Type=tile,Pos=16_3>
+<Type=tile,Pos=16_4><Type=tile,Pos=16_5><Type=tile,Pos=16_6>

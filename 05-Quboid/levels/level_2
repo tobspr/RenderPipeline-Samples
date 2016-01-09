@@ -1,0 +1,5 @@
+<Type=tile,Pos=0_6><Type=tile,Pos=0_7><Type=tile,Pos=0_8><Type=tile,Pos=1_3>
+<Type=tile,Pos=1_4><Type=tile,Pos=1_5><Type=tile,Pos=1_6><Type=goal,Pos=1_7><Type=tile,Pos=1_8><Type=tile,Pos=2_0>
+<Type=tile,Pos=2_1><Type=tile,Pos=2_2><Type=tile,Pos=2_3><Type=tile,Pos=2_4><Type=tile,Pos=2_5><Type=tile,Pos=2_6><Type=tile,Pos=2_7><Type=tile,Pos=2_8><Type=tile,Pos=3_0>
+<Type=start,Pos=3_1><Type=tile,Pos=3_2><Type=tile,Pos=3_3><Type=tile,Pos=3_4><Type=tile,Pos=3_5><Type=tile,Pos=4_0>
+<Type=tile,Pos=4_1><Type=tile,Pos=4_2>
