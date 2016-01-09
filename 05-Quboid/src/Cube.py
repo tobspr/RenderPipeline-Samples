@@ -134,7 +134,7 @@ class Cube:
         if self.level.loadLevel() == 0: #if level loaded successfully...
             self.resetCube()
         
-        print("Level up")
+        self.level.main.gui.set_stage(self.level.LevelNr + 1)
 
     def rotateCube(self,direction):
         """
@@ -204,7 +204,7 @@ class Cube:
             if direction == "down":
                 dummy.setX(dummy,.5)
                 self.cube.wrtReparentTo(dummy) 
-                dest_hpr = Vec3(0, 0, -90)
+                dest_hpr = Vec3(0, 0, 90)
                 anim = self.animate(  LerpHprInterval(dummy, duration, (0,0,90) ,(0,0,0) ) )
                 self.setCubeTiles( x1+1, y1 ,x1+2 , y1 )          
             
@@ -285,7 +285,20 @@ class Cube:
             #now that i think about it.. 3seconds are quite long.. anyway the animated flag will be cleared by 
             #self.resetCube
             # anim.insert(1, LerpPosInterval( dummy, .4 , (dummy.getX(render),dummy.getY(render), -10 )    ) )
+
+            # Force to the corner when the cuboid falls down
+            side_force = 1.7
+
             force = Vec3(0, 0, 0)
+            if direction == "up":
+                force = Vec3(-side_force, 0, 0)
+            elif direction == "down":
+                force = Vec3(side_force, 0, 0)
+            elif direction == "left":
+                force = Vec3(0, -side_force, 0)
+            elif direction == "right":
+                force = Vec3(0, side_force, 0)
+
             dummy.set_hpr(render, Vec3(0, 0, 0))
 
             del anim
@@ -293,7 +306,7 @@ class Cube:
             final_hpr = dest_hpr * 3.0 + Vec3(random(), random(), random()) * 360.0 * 0.0
             anim = self.animate( 
                 LerpFunc(self.animateCube, fromData=0, toData=1, duration=0.8, blendType='noBlend', extraArgs=[dummy.get_pos(render), Vec3(0), final_hpr, dummy, force]))
-            taskMgr.doMethodLater( anim.getDuration()+3 , self.resetCube , "resetTask")
+            taskMgr.doMethodLater( anim.getDuration()+1 , self.resetCube , "resetTask")
 
         
         elif checkresult == 2:

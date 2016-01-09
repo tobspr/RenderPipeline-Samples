@@ -2,6 +2,7 @@
 import os
 import sys
 
+
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import load_prc_file_data
 
@@ -9,6 +10,7 @@ from Cube import Cube
 from Menu import Menu
 from LevelLoader import Level
 from CamControl import CamControl
+from GUI import GUI
 
 class GameControl(ShowBase):
     """
@@ -62,6 +64,7 @@ class GameControl(ShowBase):
         self.level = Level(self)
         self.cube = Cube(self.level)
         self.camControl = CamControl(self.cube)
+        self.gui = GUI(self)
         self.menu.showMenu()
         base.accept("i",self.camControl.zoomIn)
         base.accept("o",self.camControl.zoomOut)

@@ -26,6 +26,7 @@ class Menu(object):
         self.myFrame["frameTexture"] = menu_tex
         self.myFrame.reparentTo(base.pixel2d)
         self.myFrame.set_pos( (wx-kx) / 2, 0, -(wy+ky) / 2)
+        self.myFrame.set_transparency(True)
 
         self.startButton = DirectButton(
                     text = "",  
@@ -79,6 +80,8 @@ class Menu(object):
         self.selectFrame.reparentTo(self.startButton)
         self.entries = [self.exitButton,self.startButton,self.resumeButton]
         self.activeEntry = 1
+
+
     
     
     def clearKeys(self):
@@ -117,7 +120,8 @@ class Menu(object):
 
     def hideMenu(self):
         self.clearKeys()
-        seq= Sequence( LerpColorScaleInterval(self.myFrame, 1 ,(1,1,1,0)) , Func(self.myFrame.hide) )
+        self.main.gui.show()
+        seq= Sequence( LerpColorScaleInterval(self.myFrame, 0.4 ,(1,1,1,0)) , Func(self.myFrame.hide) )
         seq.start()
     
     def hideResume(self):
@@ -136,5 +140,6 @@ class Menu(object):
         base.accept("escape", exit)
         base.accept("enter",self.execSelection)  
         self.myFrame.show()
+        self.main.gui.hide()
         seq= Sequence( LerpColorScaleInterval(self.myFrame, .5 ,(1,1,1,1)) )
         seq.start()
