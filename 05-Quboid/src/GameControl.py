@@ -21,6 +21,8 @@ class GameControl(ShowBase):
 
         load_prc_file_data("", "textures-power-2 none")
         load_prc_file_data("", "win-size 1600 900")
+        # load_prc_file_data("", "fullscreen #t")
+        # load_prc_file_data("", "win-size 2560 1440")
         load_prc_file_data("", "window-title cuboid")
         load_prc_file_data("", "icon-filename res/icon.ico")
 
@@ -48,7 +50,7 @@ class GameControl(ShowBase):
 
         # Set custom configuration directory
         cfg_dir = os.path.join(os.getcwd(), "config/")
-        self.render_pipeline.mount_mgr.set_config_dir(cfg_dir)
+        self.render_pipeline.mount_mgr.config_dir = cfg_dir
         self.render_pipeline.set_empty_loading_screen()
         self.render_pipeline.create()
 

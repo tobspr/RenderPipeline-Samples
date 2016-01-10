@@ -184,28 +184,24 @@ class Cube:
                 dummy.setY(dummy,.5)
                 self.cube.wrtReparentTo(dummy) 
                 dest_hpr = Vec3(0, -90, 0)
-                anim = self.animate( LerpHprInterval(dummy, duration, (0,-90,0) ,(0,0,0) )  )
                 self.setCubeTiles( x1, y1+1 ,x1 , y1+2 )
                 
             if direction == "left":
                 dummy.setY(dummy,-.5)
                 self.cube.wrtReparentTo(dummy)
                 dest_hpr = Vec3(0, 90, 0)
-                anim = self.animate(  LerpHprInterval(dummy, duration, (0,90,0) ,(0,0,0) )  )
                 self.setCubeTiles( x1, y1-2 ,x1 , y1-1 )
                
             if direction == "up":
                 dummy.setX(dummy,-.5)
                 self.cube.wrtReparentTo(dummy) 
                 dest_hpr = Vec3(0, 0, -90)
-                anim = self.animate( LerpHprInterval(dummy, duration, (0,0,-90) ,(0,0,0) )  )
                 self.setCubeTiles( x1-2, y1 ,x1-1 , y1 )
                             
             if direction == "down":
                 dummy.setX(dummy,.5)
                 self.cube.wrtReparentTo(dummy) 
                 dest_hpr = Vec3(0, 0, 90)
-                anim = self.animate(  LerpHprInterval(dummy, duration, (0,0,90) ,(0,0,0) ) )
                 self.setCubeTiles( x1+1, y1 ,x1+2 , y1 )          
             
         elif x1 == x2 :  #if aligned to y-axis
@@ -213,28 +209,24 @@ class Cube:
                 dummy.setY(dummy,1)
                 self.cube.wrtReparentTo(dummy)
                 dest_hpr = Vec3(0, -90, 0)
-                anim = self.animate( LerpHprInterval(dummy, duration, (0,-90,0) ,(0,0,0) ) )
                 self.setCubeTiles( x1, y1+2  )
 
             if direction == "left":
                 dummy.setY(dummy,-1)
                 self.cube.wrtReparentTo(dummy) 
                 dest_hpr = Vec3(0, 90, 0)
-                anim = self.animate( LerpHprInterval(dummy, duration, (0,90,0) ,(0,0,0) ) )
                 self.setCubeTiles( x1, y1-1)
 
             if direction == "up":
                 dummy.setX(dummy,-.5)
                 self.cube.wrtReparentTo(dummy) 
                 dest_hpr = Vec3(0, 0, -90)
-                anim = self.animate( LerpHprInterval(dummy, duration, (0,0,-90) ,(0,0,0) ) )
                 self.setCubeTiles( x1-1, y1, x2-1, y2 )
                 
             if direction == "down":
                 dummy.setX(dummy,.5)
                 self.cube.wrtReparentTo(dummy) 
                 dest_hpr = Vec3(0, 0, 90)
-                anim = self.animate( LerpHprInterval(dummy, duration, (0,0,90) ,(0,0,0) ) )
                 self.setCubeTiles( x1+1, y1, x2+1, y2 )
 
 
@@ -244,29 +236,28 @@ class Cube:
                 dummy.setY(dummy,.5)
                 self.cube.wrtReparentTo(dummy)
                 dest_hpr = Vec3(0, -90, 0)
-                anim = self.animate(  LerpHprInterval(dummy, duration, (0,-90,0) ,(0,0,0) ) )
                 self.setCubeTiles( x1, y1+1, x2, y2+1 )
                 
             if direction == "left":
                 dummy.setY(dummy,-.5)
                 self.cube.wrtReparentTo(dummy) 
                 dest_hpr = Vec3(0, 90, 0)
-                anim = self.animate(  LerpHprInterval(dummy, duration, (0,90,0) ,(0,0,0) ) )
                 self.setCubeTiles( x1, y1-1, x2, y2-1 )
             
             if direction == "up":
                 dummy.setX(dummy,-1)
                 self.cube.wrtReparentTo(dummy) 
                 dest_hpr = Vec3(0, 0, -90)
-                anim = self.animate(  LerpHprInterval(dummy, duration, (0,0,-90) ,(0,0,0) ) )
                 self.setCubeTiles( x1-1, y1  )
                 
             if direction == "down":
                 dummy.setX(dummy,1)
                 self.cube.wrtReparentTo(dummy) 
                 dest_hpr = Vec3(0, 0, 90)
-                anim = self.animate(  LerpHprInterval(dummy, duration, (0,0,90) ,(0,0,0) ) )
                 self.setCubeTiles( x1+2, y1  )
+
+        anim = self.animate( LerpHprInterval(dummy, duration, dest_hpr,(0,0,0) ) )
+
         
         #this sorta.. doesnt belong here.. but i dunno where to put it yet.
         x1,y1,x2,y2 = self.getCubeTiles()
@@ -305,13 +296,11 @@ class Cube:
 
             final_hpr = dest_hpr * 3.0 + Vec3(random(), random(), random()) * 360.0 * 0.0
             anim = self.animate( 
-                LerpFunc(self.animateCube, fromData=0, toData=1, duration=0.8, blendType='noBlend', extraArgs=[dummy.get_pos(render), Vec3(0), final_hpr, dummy, force]))
+                LerpFunc(self.animateCube, fromData=0, toData=1, duration=1.3, blendType='noBlend', extraArgs=[dummy.get_pos(render), Vec3(0), final_hpr, dummy, force]))
             taskMgr.doMethodLater( anim.getDuration()+1 , self.resetCube , "resetTask")
 
         
         elif checkresult == 2:
-
-
 
             #ok.. once reached the goal, move the block down, fading it out. thenload the new level etc.
             anim.pop()
