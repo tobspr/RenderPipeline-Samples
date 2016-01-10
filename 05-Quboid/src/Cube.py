@@ -103,6 +103,8 @@ class Cube:
         #animate the cube, once finished clear the animation tag
         self.cube.setZ(render,15)
         self.cube.wrtReparentTo(render)
+
+        print("Starting fade in sequence")
         Sequence( LerpPosInterval(self.cube, duration ,(x1, y1,1), blendType="easeOut"  ) , 
             Func(self.setAnimated,False), 
             Func(lambda:self.level.stopAnimatedTile(x1,y1) ) ).start()
@@ -121,10 +123,12 @@ class Cube:
         """
         resets the cube to the statring position, including the fly-in-from-above animation.
         """
+        print("Resetting cube")
         x,y,z = self.level.getPosFromTile(self.level.getStartTile())
         self.setPos(x,y)
         self.cube.setHpr(render,0,0,0)
         #self.level.stopAnimatedTile(x,y )
+        print("Fading in cube")
         self.fadeInCube()
     
     def levelUp(self, task=None):
@@ -159,11 +163,12 @@ class Cube:
         self.level.animateTile(x1,y1)
         self.level.animateTile(x2,y2)
         
-        dummy=render.attachNewNode("dummy")
+        dummy = render.attachNewNode("dummy")
         dummy.reparentTo(self.cube)
         dummy.setZ(render,0)
         dummy.wrtReparentTo(render)
         dummy.setHpr(0,0,0)
+        dest_hpr = Vec3(0)
             
         if self.cube.getZ(render) > .7:
             #case1 : cube is standing upright
@@ -178,7 +183,6 @@ class Cube:
             self.cube.setP(render, round(self.cube.getP(render),0)  )
             self.cube.setR(render, round(self.cube.getR(render),0)  )
 
-            dest_hpr = Vec3(0)
 
             if direction == "right":
                 dummy.setY(dummy,.5)
@@ -256,6 +260,11 @@ class Cube:
                 dest_hpr = Vec3(0, 0, 90)
                 self.setCubeTiles( x1+2, y1  )
 
+        else:
+            print("Invalid move. Waiting ..")
+
+
+        print("Rotating!")
         anim = self.animate( LerpHprInterval(dummy, duration, dest_hpr,(0,0,0) ) )
 
         
@@ -271,11 +280,6 @@ class Cube:
         if checkresult == 1:
             self.falls +=1
             self.moves +=1
-            #so if you failed, the block falls down. the pop() removes the "setAnimation(false) from the sequence
-            #and adds a tasl which resets the cube after 3 seconds wait time...
-            #now that i think about it.. 3seconds are quite long.. anyway the animated flag will be cleared by 
-            #self.resetCube
-            # anim.insert(1, LerpPosInterval( dummy, .4 , (dummy.getX(render),dummy.getY(render), -10 )    ) )
 
             # Force to the corner when the cuboid falls down
             side_force = 1.7
@@ -294,12 +298,11 @@ class Cube:
 
             del anim
 
+            self.setAnimated(True)
             final_hpr = dest_hpr * 3.0 + Vec3(random(), random(), random()) * 360.0 * 0.0
-            anim = self.animate( 
-                LerpFunc(self.animateCube, fromData=0, toData=1, duration=1.3, blendType='noBlend', extraArgs=[dummy.get_pos(render), Vec3(0), final_hpr, dummy, force]))
-            taskMgr.doMethodLater( anim.getDuration()+1 , self.resetCube , "resetTask")
+            anim = LerpFunc(self.animateCube, fromData=0, toData=1, duration=1.3, blendType='noBlend', extraArgs=[dummy.get_pos(render), Vec3(0), final_hpr, dummy, force])
+            taskMgr.doMethodLater( anim.getDuration(), self.resetCube , "resetTask")
 
-        
         elif checkresult == 2:
 
             #ok.. once reached the goal, move the block down, fading it out. thenload the new level etc.

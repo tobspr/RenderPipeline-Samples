@@ -11,9 +11,10 @@ further tags could be "ID" which could come in handy when using switches.
 notice the naming. tag names start capital, the values lowercase.
 
 """
-from panda3d.core import NodePath
+from panda3d.core import NodePath, Vec3
 from direct.showbase.Loader import Loader
 from direct.interval.LerpInterval import LerpPosQuatInterval,LerpPosInterval, LerpHprInterval ,LerpPosHprInterval ,LerpColorScaleInterval
+from direct.interval.LerpInterval import LerpFunc
 from direct.interval.FunctionInterval import Func,Wait
 from direct.interval.MetaInterval import Sequence
 from random import random
@@ -230,11 +231,27 @@ class Level:
             self.stopAnimatedTile(x,y,True)
             tile.setPos(x,y,0)
             #tile.setHpr(random()*360,random()*360,random()*360)
-            seq = LerpPosHprInterval(tile,fadeTime+(0.3*fadeTime*random()),(x,y,-15),(random()*360 -180,random()*360-180,random()*360-180), blendType='easeIn')
-            tile.setPythonTag("Seq", seq )
+            # seq = LerpPosHprInterval(tile,fadeTime+(0.3*fadeTime*random()),(x,y,-15),(random()*360 -180,random()*360-180,random()*360-180), blendType='easeIn')
+            # seq.start()
+
+            final_hpr = Vec3(random(), random(), random()) * 360.0
+            force = (Vec3(random(), random(), random())-0.5) * 5.0
+            force.z = 0
+            seq = LerpFunc(self.tileGravityAnimation, fromData=0, toData=1, duration=1.0, blendType='noBlend', extraArgs=[tile.get_pos(render), Vec3(0), final_hpr, tile, force])
+            tile.setPythonTag("Seq", seq)
             seq.start()
-        
-        
+
+
+    def tileGravityAnimation(self, t, initial_pos, initial_hpr, dest_hpr, tile, force):
+        """
+        Animates a tile by applying gravity
+        """
+        z_force = -(t**2) * 9.81 * 1.7
+        regular_force = force * t
+        dest_pos = initial_pos + regular_force + Vec3(0, 0, z_force)
+        tile.set_pos(render, dest_pos)
+        tile.set_hpr(render, initial_hpr * (1 - t) + dest_hpr * t)
+       
     def fadeInLevel(self, fadeTime = 1.6):
         """
         fade-in animation. the parameter it takes is the time in seconds.changing it might cause animation glitches with the cube-fade-in animation
