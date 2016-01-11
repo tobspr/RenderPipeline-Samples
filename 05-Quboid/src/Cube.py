@@ -337,7 +337,7 @@ class Cube:
                         shard.set_z(k * shard_size.z + 0.2)
                         shard.set_scale(0.8 + random())
 
-                        force = Vec3(i-2 - 0.1, j-2 - 0.1, k-2 + 2.6)
+                        force = Vec3(i-2 - 0.15, j-2 - 0.15, k-2 + 2.6)
                         force.normalize()
                         force *= 12.0 * (1 + random() * 0.5)
 

@@ -27,7 +27,7 @@ class MainApp(ShowBase):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-        win-size 1920 1080
+        win-size 1600 900
         window-title Render Pipeline by tobspr 
         icon-filename Data/GUI/icon.ico
         """)
@@ -64,6 +64,9 @@ class MainApp(ShowBase):
         model = loader.loadModel("scene/TestScene.bam")
         model.reparent_to(render)
 
+        # Enable parallax mapping on the floor
+        self.render_pipeline.set_effect(model.find("**/FloorPlane"), "Effects/Default.yaml", {"parallax_mapping": True}, 10)
+
         # Load some fancy ies profile
         ies_profile = self.render_pipeline.load_ies_profile("Data/IESProfiles/Defined.ies")
         
@@ -83,7 +86,7 @@ class MainApp(ShowBase):
                 light.casts_shadows = True
                 light.near_plane = 0.1
                 light.shadow_map_resolution = 512
-                # light.ies_profile = ies_profile
+                light.ies_profile = ies_profile
                 self.render_pipeline.add_light(light)
 
         # Init movement controller

@@ -66,15 +66,31 @@ class MainApp(ShowBase):
         model.reparent_to(render)
         model.set_z(1)
 
-        self.render_pipeline.set_effect(model, "Effects/MaterialBlend4.yaml", {
+        # Set the material blending effect on the terrain
+        terrain = model.find("**/Terrain")
+        self.render_pipeline.set_effect(terrain, "Effects/MaterialBlend4.yaml", {
                 "parallax_mapping": False, # Not supported
                 "alpha_testing": False,
                 "normal_mapping": False, # The effect does its own normal mapping
             })
 
+        # Configure the effect
+        terrain.set_shader_input("detail_scale_factor", 4.0)
+        
+        # Detailmap blending factors.
+        # Blending is calculated as  (detailmap + <add>) ^ <pow>
+        # The base map has no blending since it is used as a filling material
+        # and blending the base map would cause spots with no material at all.
+        terrain.set_shader_input("material_0_pow", 10.0)
+        terrain.set_shader_input("material_0_add",  0.5)
+        terrain.set_shader_input("material_1_pow", 10.0)
+        terrain.set_shader_input("material_1_add",  0.5)
+        terrain.set_shader_input("material_2_pow", 10.0)
+        terrain.set_shader_input("material_2_add",  0.5)
+
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(0, 10, 8), Vec3(0, 0, 0))
+        self.controller.set_initial_position(Vec3(0, 12, 14), Vec3(0, 0, 0))
         self.controller.setup()
         
 MainApp().run()
