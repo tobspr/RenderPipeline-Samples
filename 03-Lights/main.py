@@ -85,30 +85,6 @@ class MainApp(ShowBase):
             panda.set_scale(0.2)
             panda.set_y(panda.get_y() + 1.0)
 
-
-        # Load some fancy ies profile
-        # ies_profile = self.render_pipeline.load_ies_profile("Data/IESProfiles/Defined.ies")
-        
-        # Add some random lights
-        # sqr = 2
-        # seed(3)
-        # for x in range(sqr):
-        #     for y in range(sqr):
-        #         light = SpotLight()
-        #         light.direction = (0, 0, -1)
-        #         light.fov = 110.0
-        #         light.set_color_from_temperature(6504)
-        #         print(light.color)
-        #         light.lumens = 1.0
-        #         pos_x, pos_y = (x-sqr//2) * 7.0 + 5.0, (y-sqr//2) * 7.0 + 5.0
-        #         light.pos = (pos_x, pos_y, 12.0)
-        #         light.radius = 35.0
-        #         light.casts_shadows = True
-        #         light.near_plane = 0.1
-        #         light.shadow_map_resolution = 512
-        #         # light.ies_profile = ies_profile
-        #         self.render_pipeline.add_light(light)
-
         # Init movement controller
         self.controller = MovementController(self)
         self.controller.set_initial_position(Vec3(3, 25, 8), Vec3(5, 0, 0))
