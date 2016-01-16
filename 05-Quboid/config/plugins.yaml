@@ -15,26 +15,26 @@ enabled:
 
 overrides: 
     AO.alchemy_max_distance: 4.08
-    AO.alchemy_num_samples: 32
+    AO.alchemy_num_samples: 8
     AO.alchemy_sample_radius: 92.78
     AO.blur_depth_factor: 1.2
     AO.blur_normal_factor: 1.53
     AO.hbao_max_distance: 8.23
-    AO.hbao_ray_count: 12
+    AO.hbao_ray_count: 4
     AO.hbao_ray_steps: 3
     AO.hbao_sample_radius: 97.17
     AO.hbao_tangent_bias: 0.6889
     AO.occlusion_strength: 0.62
     AO.ssao_bias: 0.0
     AO.ssao_max_distance: 7.33333
-    AO.ssao_sample_count: 32
+    AO.ssao_sample_count: 8
     AO.ssao_sample_radius: 79.61
     AO.ssvo_max_distance: 2.04
-    AO.ssvo_sample_count: 32
+    AO.ssvo_sample_count: 8
     AO.ssvo_sphere_radius: 0.1
     AO.technique: SSAO
     AO.ue4ao_max_distance: 4.3
-    AO.ue4ao_sample_count: 32
+    AO.ue4ao_sample_count: 8
     AO.ue4ao_sample_radius: 145.44
     Bloom.bloom_strength: 1.45
     Bloom.minimum_luminance: 30.56
@@ -68,7 +68,7 @@ overrides:
     ColorCorrection.vignette_strength: 0.5333
     PSSM.border_bias: 0.1867
     PSSM.filter_radius: 6.26
-    PSSM.filter_sample_count: 32
+    PSSM.filter_sample_count: 8
     PSSM.fixed_bias: 0.0444
     PSSM.logarithmic_factor: 0.94
     PSSM.max_distance: 11.8

@@ -11,7 +11,7 @@ Fragment.GBuffer:
         material:
             m.basecolor = sampled_diffuse.xyz;
             m.roughness = 0.7;
-            m.specular = 0.1;
+            m.specular_ior = 1.4;
             m.metallic = 0;
             m.normal = vOutput.normal;
             m.translucency = 0.0;
