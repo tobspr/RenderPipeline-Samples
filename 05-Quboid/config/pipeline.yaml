@@ -12,7 +12,7 @@ settings:
         # it will also disable the hotkeys, and give a small performance boost.
         # Most likely you also don't want to show it in your own game, so set
         # it to false in that case.
-        display_debugger: false
+        display_debugger: true
 
     # This are the settings affecting the lighting part of the pipeline,
     # including builtin shadows and lights. 
