@@ -55,7 +55,7 @@ class World(ShowBase):
 
         sys.path.insert(0, pipeline_path)
 
-        from __init__ import RenderPipeline, SpotLight
+        from render_pipeline_importer import RenderPipeline, SpotLight
         from Code.Util.MovementController import MovementController
 
         self.render_pipeline = RenderPipeline(self)
