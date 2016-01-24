@@ -27,7 +27,8 @@ class MainApp(ShowBase):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-        win-size 1600 900
+        # win-size 1600 900
+        win-size 1920 1080
         window-title Render Pipeline by tobspr 
         icon-filename Data/GUI/icon.ico
         """)

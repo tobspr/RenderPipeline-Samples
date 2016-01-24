@@ -28,7 +28,7 @@ class MainApp(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
         win-size 1600 900
-        window-title Render Pipeline by tobspr 
+        window-title Render Pipeline by tobspr
         icon-filename Data/GUI/icon.ico
         """)
 
@@ -42,7 +42,7 @@ class MainApp(ShowBase):
         # commit a wrong path. You can remove this in your own programs.
         if not os.path.isfile(os.path.join(pipeline_path, "setup.py")):
             pipeline_path = "../../RenderPipeline/"
-            
+
         sys.path.insert(0, pipeline_path)
 
         from render_pipeline_importer import RenderPipeline, SpotLight
@@ -63,8 +63,11 @@ class MainApp(ShowBase):
         model = loader.loadModel("scene/Scene.bam")
         model.reparent_to(render)
 
+        self._lights = []
+
         # Temperature lamps
-        for lumlamp in model.find_all_matches("**/LampLum*"):
+        light_key = lambda light: int(light.get_name().split("LampLum")[-1])
+        for lumlamp in sorted(model.find_all_matches("**/LampLum*"), key=light_key):
             lum = float(lumlamp.get_name()[len("LampLum"):])
             light = SpotLight()
             light.direction = (0, 0, -1)
@@ -85,9 +88,23 @@ class MainApp(ShowBase):
             panda.set_scale(0.2)
             panda.set_y(panda.get_y() + 1.0)
 
+            self._lights.append(light)
+
+
         # Init movement controller
         self.controller = MovementController(self)
         self.controller.set_initial_position(Vec3(3, 25, 8), Vec3(5, 0, 0))
         self.controller.setup()
-        
+
+        self.addTask(self.update, "update")
+
+    def update(self, task):
+        """ Update method """
+        frame_time = globalClock.get_frame_time()
+        # Make the lights glow
+        for i, light in enumerate(self._lights):
+            brightness = math.sin(0.4 * i + frame_time * 4.0)
+            light.lumens = 450.0 + brightness * 450.0
+        return task.cont
+
 MainApp().run()
