@@ -38,7 +38,7 @@ class World(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
         win-size 1600 900
-        window-title Render Pipeline by tobspr 
+        window-title Render Pipeline by tobspr
         icon-filename Data/GUI/icon.ico
         """)
 
@@ -69,10 +69,10 @@ class World(ShowBase):
 
         # Use a special effect for rendering the scene, this is because the
         # roaming ralph model has no normals or valid materials
-        self.render_pipeline.set_effect(render, "scene-effect.yaml", {}, sort=50)
+        self.render_pipeline.set_effect(render, "scene-effect.yaml", {}, sort=250)
 
 
-        
+
         self.keyMap = {"left":0, "right":0, "forward":0, "cam-left":0, "cam-right":0}
         base.win.setClearColor(Vec4(0,0,0,1))
 
@@ -85,7 +85,7 @@ class World(ShowBase):
         self.inst4 = addInstructions(0.80, "[Up Arrow]: Run Ralph Forward")
         self.inst6 = addInstructions(0.70, "[A]: Rotate Camera Left")
         self.inst7 = addInstructions(0.65, "[S]: Rotate Camera Right")
-        
+
         # Set up the environment
         #
         # This environment model contains collision meshes.  If you look
@@ -96,12 +96,12 @@ class World(ShowBase):
         # This tag causes the following mesh to be converted to a collision
         # mesh -- a mesh which is optimized for collision, not rendering.
         # It also keeps the original mesh, so there are now two copies ---
-        # one optimized for rendering, one for collisions.  
+        # one optimized for rendering, one for collisions.
 
-        self.environ = loader.loadModel("resources/world")      
+        self.environ = loader.loadModel("resources/world")
         self.environ.reparentTo(render)
         self.environ.setPos(0,0,0)
-        
+
 
         # Remove wall nodes
         self.environ.find("**/wall").remove_node()
@@ -118,7 +118,7 @@ class World(ShowBase):
 
         # Create a floater object.  We use the "floater" as a temporary
         # variable in a variety of calculations.
-        
+
         self.floater = NodePath(PandaNode("floater"))
         self.floater.reparentTo(render)
 
@@ -142,10 +142,10 @@ class World(ShowBase):
         self.isMoving = False
 
         # Set up the camera
-        
+
         base.disableMouse()
         base.camera.setPos(self.ralph.getX(),self.ralph.getY()+10,2)
-        
+
         # We will detect the height of the terrain by creating a collision
         # ray and casting it downward toward the terrain.  One ray will
         # start above ralph's head, and the other will start above the camera.
@@ -180,11 +180,11 @@ class World(ShowBase):
         # Uncomment this line to see the collision rays
         #self.ralphGroundColNp.show()
         #self.camGroundColNp.show()
-       
-        # Uncomment this line to show a visual representation of the 
+
+        # Uncomment this line to show a visual representation of the
         # collisions occuring
         #self.cTrav.showCollisions(render)
-        
+
         # Create some lighting
         ambientLight = AmbientLight("ambientLight")
         ambientLight.setColor(Vec4(.3, .3, .3, 1))
@@ -194,11 +194,11 @@ class World(ShowBase):
         directionalLight.setSpecularColor(Vec4(1, 1, 1, 1))
         render.setLight(render.attachNewNode(ambientLight))
         render.setLight(render.attachNewNode(directionalLight))
-    
+
     #Records the state of the arrow keys
     def setKey(self, key, value):
         self.keyMap[key] = value
-    
+
 
     # Accepts arrow keys to move either the player or the menu cursor,
     # Also deals with grid checking and collision detection
@@ -275,7 +275,7 @@ class World(ShowBase):
 
         # Keep the camera at one foot above the terrain,
         # or two feet above ralph, whichever is greater.
-        
+
         entries = []
         for i in range(self.camGroundHandler.getNumEntries()):
             entry = self.camGroundHandler.getEntry(i)
@@ -286,11 +286,11 @@ class World(ShowBase):
             base.camera.setZ(entries[0].getSurfacePoint(render).getZ()+1.0)
         if (base.camera.getZ() < self.ralph.getZ() + 2.0):
             base.camera.setZ(self.ralph.getZ() + 2.0)
-            
+
         # The camera should look in ralph's direction,
         # but it should also try to stay horizontal, so look at
         # a floater which hovers above ralph's head.
-        
+
         self.floater.setPos(self.ralph.getPos())
         self.floater.setZ(self.ralph.getZ() + 2.0)
         base.camera.lookAt(self.floater)
