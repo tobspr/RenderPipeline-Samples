@@ -9,7 +9,7 @@ import os
 import sys
 import math
 from random import random, randint, seed
-from panda3d.core import Vec3, load_prc_file_data
+from panda3d.core import Vec3, load_prc_file_data, Material
 from direct.showbase.ShowBase import ShowBase
 
 # Change to the current directory
@@ -82,6 +82,7 @@ class MainApp(ShowBase):
 
             panda = loader.loadModel("panda")
             panda.reparent_to(render)
+            panda.set_material(Material("default"))
             panda.set_pos(light.pos)
             panda.set_z(0.65)
             panda.set_h(180 + randint(-60, 60))
