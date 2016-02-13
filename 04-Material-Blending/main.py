@@ -15,10 +15,8 @@ from direct.showbase.ShowBase import ShowBase
 # Switch into the current directory
 os.chdir(os.path.realpath(os.path.dirname(__file__)))
 
-
 # Append the current directory to the path
 sys.path.insert(0, os.getcwd())
-
 
 class MainApp(ShowBase):
 
