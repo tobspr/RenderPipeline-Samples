@@ -29,7 +29,7 @@ class MainApp(ShowBase):
         load_prc_file_data("", """
         win-size 1600 900
         # win-size 1920 1080
-        window-title Render Pipeline by tobspr 
+        window-title Render Pipeline by tobspr
         icon-filename Data/GUI/icon.ico
         """)
 
@@ -43,11 +43,11 @@ class MainApp(ShowBase):
         # commit a wrong path. You can remove this in your own programs.
         if not os.path.isfile(os.path.join(pipeline_path, "setup.py")):
             pipeline_path = "../../RenderPipeline/"
-            
+
         sys.path.insert(0, pipeline_path)
 
         from render_pipeline_importer import RenderPipeline, SpotLight
-        from Code.Util.MovementController import MovementController
+        from code.util.movement_controller import MovementController
 
         self.render_pipeline = RenderPipeline(self)
         self.render_pipeline.create()
@@ -66,11 +66,11 @@ class MainApp(ShowBase):
         model.reparent_to(render)
 
         # Enable parallax mapping on the floor
-        self.render_pipeline.set_effect(model.find("**/FloorPlane"), "Effects/Default.yaml", {"parallax_mapping": True}, 10)
+        self.render_pipeline.set_effect(model.find("**/FloorPlane"), "effects/default.yaml", {"parallax_mapping": True}, 10)
 
         # Load some fancy ies profile
-        ies_profile = self.render_pipeline.load_ies_profile("Data/IESProfiles/Defined.ies")
-        
+        ies_profile = self.render_pipeline.load_ies_profile("data/ies_profiles/defined.ies")
+
         # Add some random lights
         sqr = 2
         seed(3)
@@ -94,5 +94,5 @@ class MainApp(ShowBase):
         self.controller = MovementController(self)
         self.controller.set_initial_position(Vec3(3, 25, 8), Vec3(5, 0, 0))
         self.controller.setup()
-        
+
 MainApp().run()

@@ -44,13 +44,8 @@ class GameControl(ShowBase):
 
         # Use the utility script to import the render pipeline classes
         from render_pipeline_importer import RenderPipeline
-        from Code.Util.MovementController import MovementController
 
         self.render_pipeline = RenderPipeline(self)
-
-        # Set custom configuration directory
-        cfg_dir = os.path.join(os.getcwd(), "config/")
-        self.render_pipeline.mount_mgr.config_dir = cfg_dir
         self.render_pipeline.set_empty_loading_screen()
         self.render_pipeline.create()
 
@@ -70,32 +65,32 @@ class GameControl(ShowBase):
         self.menu.showMenu()
         base.accept("i",self.camControl.zoomIn)
         base.accept("o",self.camControl.zoomOut)
-            
+
     def startGame(self,level=0):
         #debug purpose only: to directly play a certian lvl number
         from sys import argv
         if len(argv) >1:
             level = int(argv[1])
-            
+
         self.menu.hideMenu()
         self.level.loadLevel(level)
         self.cube.resetCube()
         self.cube.resetStats()
         self.cube.enableGameControl()
         base.accept("escape", self.pauseGame)
-        
+
     def pauseGame(self):
         self.cube.disableGameControl()
         self.menu.showMenu()
         self.menu.showResume()
         #base.accept("escape", self.resumeGame )
-        
+
     def resumeGame(self):
         self.menu.hideMenu()
         self.menu.hideResume()
         self.cube.enableGameControl()
         base.accept("escape", self.pauseGame)
-    
+
     def levelEnd(self):
         self.cube.disableGameControl()
         self.menu.showMenu()

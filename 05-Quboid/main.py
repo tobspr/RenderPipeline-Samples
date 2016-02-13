@@ -15,6 +15,6 @@ os.chdir(os.path.join(os.path.dirname(os.path.realpath(__file__))))
 # Append the current directory to the path
 sys.path.insert(0, os.getcwd())
 
-from src.GameControl import GameControl 
+from src.GameControl import GameControl
 game = GameControl()
 game.run()
