@@ -13,7 +13,7 @@ from panda3d.core import Vec3, load_prc_file_data
 from direct.showbase.ShowBase import ShowBase
 
 # Change to the current directory
-os.chdir(os.path.join(os.path.dirname(os.path.realpath(__file__))))
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 # Append the current directory to the path
 sys.path.insert(0, os.getcwd())

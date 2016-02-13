@@ -19,6 +19,9 @@ from direct.actor.Actor import Actor
 from direct.showbase.ShowBase import ShowBase
 import random, sys, os, math
 
+# Switch into the current directory
+os.chdir(os.path.realpath(os.path.dirname(__file__)))
+
 SPEED = 0.5
 
 # Function to put instructions on the screen.
@@ -70,8 +73,6 @@ class World(ShowBase):
         # Use a special effect for rendering the scene, this is because the
         # roaming ralph model has no normals or valid materials
         self.render_pipeline.set_effect(render, "scene-effect.yaml", {}, sort=250)
-
-
 
         self.keyMap = {"left":0, "right":0, "forward":0, "cam-left":0, "cam-right":0}
         base.win.setClearColor(Vec4(0,0,0,1))
