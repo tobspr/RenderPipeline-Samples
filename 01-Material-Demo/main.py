@@ -59,7 +59,7 @@ class MainApp(ShowBase):
 
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.set_time(0.655)
+        self.render_pipeline.daytime_mgr.time = 0.655
 
         # Load the scene
         model = loader.loadModel("scene/TestScene.bam")
