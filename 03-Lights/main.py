@@ -92,7 +92,9 @@ class MainApp(ShowBase):
             if lumlamp in lumlamps[0:2] + lumlamps[-2:]:
                 panda = loader.loadModel("panda")
                 panda.reparent_to(render)
-                panda.set_material(Material("default"))
+                panda_mat = Material("default")
+                panda_mat.emission = 0
+                panda.set_material(panda_mat)
                 panda.set_pos(light.pos)
                 panda.set_z(0.65)
                 panda.set_h(180 + randint(-60, 60))
@@ -114,7 +116,7 @@ class MainApp(ShowBase):
         # Make the lights glow
         for i, light in enumerate(self._lights):
             brightness = math.sin(0.4 * i + frame_time * 4.0)
-            light.lumens = self.half_lumens / 2 + brightness * self.half_lumens
+            light.lumens = max(0, self.half_lumens / 2 + brightness * self.half_lumens)
 
         return task.cont
 
