@@ -58,7 +58,13 @@ class MainApp(ShowBase):
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.52
+        self.render_pipeline.daytime_mgr.time = 0.66
+
+        # Light needs to be less-than-overpowering at night but bright at day
+        is_day = 0.3 < self.render_pipeline.daytime_mgr.time < 0.63
+        self.half_lumens = is_day and 250 or 20
+        self.lamp_fov = is_day and 70 or 45
+        self.lamp_radius = is_day and 10 or 7.5
 
         # Load the scene
         model = loader.loadModel("scene/Scene.bam")
@@ -68,30 +74,32 @@ class MainApp(ShowBase):
 
         # Temperature lamps
         light_key = lambda light: int(light.get_name().split("LampLum")[-1])
-        for lumlamp in sorted(model.find_all_matches("**/LampLum*"), key=light_key):
+        lumlamps = sorted(model.find_all_matches("**/LampLum*"), key=light_key)
+        for lumlamp in lumlamps:
             lum = float(lumlamp.get_name()[len("LampLum"):])
             light = SpotLight()
-            light.direction = (0, 0, -1)
-            light.fov = 70
+            light.direction = (0, -1.5, -1)
+            light.fov = self.lamp_fov
             light.set_color_from_temperature(lum * 1000.0)
-            light.lumens = 500.0
+            light.lumens = self.half_lumens
             light.pos = lumlamp.get_pos(self.render)
-            light.radius = 10
+            light.radius = self.lamp_radius
             light.casts_shadows = True
             light.shadow_map_resolution = 512
             self.render_pipeline.add_light(light)
 
-            panda = loader.loadModel("panda")
-            panda.reparent_to(render)
-            panda.set_material(Material("default"))
-            panda.set_pos(light.pos)
-            panda.set_z(0.65)
-            panda.set_h(180 + randint(-60, 60))
-            panda.set_scale(0.2)
-            panda.set_y(panda.get_y() + 1.0)
+            # Put Pandas on the edges
+            if lumlamp in lumlamps[0:2] + lumlamps[-2:]:
+                panda = loader.loadModel("panda")
+                panda.reparent_to(render)
+                panda.set_material(Material("default"))
+                panda.set_pos(light.pos)
+                panda.set_z(0.65)
+                panda.set_h(180 + randint(-60, 60))
+                panda.set_scale(0.2)
+                panda.set_y(panda.get_y() - 3.0)
 
             self._lights.append(light)
-
 
         # Init movement controller
         self.controller = MovementController(self)
@@ -106,7 +114,8 @@ class MainApp(ShowBase):
         # Make the lights glow
         for i, light in enumerate(self._lights):
             brightness = math.sin(0.4 * i + frame_time * 4.0)
-            light.lumens = 450.0 + brightness * 450.0
+            light.lumens = self.half_lumens / 2 + brightness * self.half_lumens
+
         return task.cont
 
 MainApp().run()
