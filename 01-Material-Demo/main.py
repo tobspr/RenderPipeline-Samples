@@ -15,22 +15,15 @@ from direct.showbase.ShowBase import ShowBase
 # Change to the current directory
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-# Append the current directory to the path
-sys.path.insert(0, os.getcwd())
-
-
 class MainApp(ShowBase):
-
-    """ Main Testing Showbase """
-
     def __init__(self):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-        win-size 1600 900
-        # win-size 1920 1080
-        window-title Render Pipeline by tobspr
-        icon-filename Data/GUI/icon.ico
+            win-size 1600 900
+            # win-size 1920 1080
+            window-title Render Pipeline by tobspr
+            icon-filename Data/GUI/icon.ico
         """)
 
         # ------ Begin of render pipeline code ------
@@ -46,17 +39,15 @@ class MainApp(ShowBase):
 
         sys.path.insert(0, pipeline_path)
 
-        from render_pipeline_importer import RenderPipeline, SpotLight
-        from code.util.movement_controller import MovementController
-
+        from rpcore import RenderPipeline, SpotLight
         self.render_pipeline = RenderPipeline(self)
         self.render_pipeline.create()
 
-        # [Optional] use the default skybox, you can use your own skybox as well
-        self.render_pipeline.create_default_skybox()
+        # This is a helper class for better camera movement - its not really
+        # a rendering element, but it included for convenience
+        from rpcore.util.movement_controller import MovementController
 
         # ------ End of render pipeline code, thats it! ------
-
 
         # Set time of day
         self.render_pipeline.daytime_mgr.time = 0.655

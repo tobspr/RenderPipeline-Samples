@@ -47,13 +47,12 @@ class MainApp(ShowBase):
         sys.path.insert(0, pipeline_path)
 
         from rpcore import RenderPipeline, SpotLight
-        from rpcore.util.movement_controller import MovementController
-
         self.render_pipeline = RenderPipeline(self)
         self.render_pipeline.create()
 
-        # [Optional] use the default skybox, you can use your own skybox as well
-        self.render_pipeline.create_default_skybox()
+        # This is a helper class for better camera movement - its not really
+        # a rendering element, but it included for convenience
+        from rpcore.util.movement_controller import MovementController
 
         # ------ End of render pipeline code, thats it! ------
 
