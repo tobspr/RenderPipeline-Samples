@@ -49,15 +49,12 @@ class MainApp(ShowBase):
 
         # ------ End of render pipeline code, thats it! ------
 
-        # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.655
-
         # Load the scene
         model = loader.loadModel("scene/TestScene.bam")
         model.reparent_to(render)
 
         # Enable parallax mapping on the floor
-        self.render_pipeline.set_effect(model.find("**/FloorPlane"), "effects/default.yaml", {"parallax_mapping": True}, 10)
+        self.render_pipeline.set_effect(model.find("**/FloorPlane"), "effects/default.yaml", {"parallax_mapping": True}, 100)
 
         # Load some fancy ies profile
         ies_profile = self.render_pipeline.load_ies_profile("data/ies_profiles/defined.ies")
