@@ -56,10 +56,9 @@ class MainApp(ShowBase):
         self.render_pipeline.daytime_mgr.time = 0.72
 
         # Light needs to be less-than-overpowering at night but bright at day
-        is_day = 0.3 < self.render_pipeline.daytime_mgr.time < 0.63
-        self.half_lumens = is_day and 250 or 20
-        self.lamp_fov = is_day and 70 or 45
-        self.lamp_radius = is_day and 10 or 7.5
+        self.half_lumens = 160
+        self.lamp_fov = 70
+        self.lamp_radius = 10
 
         # Load the scene
         model = loader.loadModel("scene/Scene.bam")
