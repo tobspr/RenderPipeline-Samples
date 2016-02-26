@@ -2,9 +2,6 @@
 # Special effect file for rendering the roaming ralph scene, since roaming
 # Ralph has no normals or material information
 
-vertex:
-    template: default
-
 gbuffer:
     template: default
     inject:
@@ -15,9 +12,3 @@ gbuffer:
             m.metallic = 0;
             m.normal = vOutput.normal;
             m.translucency = 0.0;
-
-shadows:
-    template: default
-
-voxelize:
-    template: default

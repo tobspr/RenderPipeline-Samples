@@ -23,8 +23,8 @@ class MainApp(ShowBase):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-        win-size 1600 900
-        # win-size 1920 1080
+        # win-size 1600 900
+        win-size 1920 1080
         window-title Render Pipeline by tobspr
         icon-filename Data/GUI/icon.ico
         """)
@@ -56,13 +56,17 @@ class MainApp(ShowBase):
         self.render_pipeline.daytime_mgr.time = 0.72
 
         # Light needs to be less-than-overpowering at night but bright at day
-        self.half_lumens = 160
+        # self.half_lumens = 160
+        self.half_lumens = 1
         self.lamp_fov = 70
         self.lamp_radius = 10
-
         # Load the scene
         model = loader.loadModel("scene/Scene.bam")
         model.reparent_to(render)
+
+        for np in model.find_all_matches("**/ENVPROBE*"):
+            probe = self.render_pipeline.add_environment_probe()
+            probe.set_mat(np.get_mat())
 
         self._lights = []
 
@@ -102,7 +106,23 @@ class MainApp(ShowBase):
         self.controller.set_initial_position(Vec3(3, 25, 8), Vec3(5, 0, 0))
         self.controller.setup()
 
+        self.day_time = 0.3
+        self.time_direction = 0
+
+        self.accept("k", self.reset)
+        self.accept("p", self.set_time_direction, [1,])
+        self.accept("p-up", self.set_time_direction, [0,])
+        self.accept("i", self.set_time_direction, [-1,])
+        self.accept("i-up", self.set_time_direction, [0,])
+
+
         self.addTask(self.update, "update")
+
+    def reset(self):
+        self.day_time = 0.209
+
+    def set_time_direction(self, direction):
+        self.time_direction = direction
 
     def update(self, task):
         """ Update method """
@@ -111,6 +131,10 @@ class MainApp(ShowBase):
         for i, light in enumerate(self._lights):
             brightness = math.sin(0.4 * i + frame_time * 4.0)
             light.lumens = max(0, self.half_lumens / 2 + brightness * self.half_lumens)
+
+        self.day_time += globalClock.get_dt() / 40.0 * self.time_direction
+
+        self.render_pipeline.daytime_mgr.time = self.day_time
 
         return task.cont
 
