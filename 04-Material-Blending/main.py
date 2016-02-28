@@ -70,7 +70,7 @@ class MainApp(ShowBase):
                 "parallax_mapping": False, # Not supported
                 "alpha_testing": False,
                 "normal_mapping": False, # The effect does its own normal mapping
-            })
+            }, 100)
 
         # Configure the effect
         terrain.set_shader_input("detail_scale_factor", 4.0)
@@ -88,7 +88,7 @@ class MainApp(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(0, 12, 14), Vec3(0, 0, 0))
+        self.controller.set_initial_position(Vec3(0, -12, 14), Vec3(0, 0, 0))
         self.controller.setup()
 
 MainApp().run()

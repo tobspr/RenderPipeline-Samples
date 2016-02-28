@@ -11,6 +11,7 @@ import math
 from random import random, randint, seed
 from panda3d.core import Vec3, load_prc_file_data, Material
 from direct.showbase.ShowBase import ShowBase
+from direct.interval.IntervalGlobal import Sequence
 
 # Switch into the current directory
 os.chdir(os.path.realpath(os.path.dirname(__file__)))
@@ -23,8 +24,8 @@ class MainApp(ShowBase):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-        # win-size 1600 900
-        win-size 1920 1080
+        win-size 1600 900
+        # win-size 1920 1080
         window-title Render Pipeline by tobspr
         icon-filename Data/GUI/icon.ico
         """)
@@ -53,11 +54,9 @@ class MainApp(ShowBase):
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.72
-
-        # Light needs to be less-than-overpowering at night but bright at day
-        # self.half_lumens = 160
-        self.half_lumens = 1
+        self.render_pipeline.daytime_mgr.time = 0.32
+        self.half_lumens = 160
+        # self.half_lumens = 20
         self.lamp_fov = 70
         self.lamp_radius = 10
         # Load the scene
@@ -68,9 +67,35 @@ class MainApp(ShowBase):
             probe = self.render_pipeline.add_environment_probe()
             probe.set_mat(np.get_mat())
 
-        self._lights = []
 
-        # Temperature lamps
+        # Animate balls, this is for testing the motion blur
+        blend_type = "noBlend"
+
+        np = model.find("**/MBRotate")
+        np.hprInterval(1.5, Vec3(360, 360, 0), Vec3(0, 0, 0), blendType=blend_type).loop()
+
+        np = model.find("**/MBUpDown")
+        np_pos = np.get_pos() - Vec3(0, 0, 2)
+        Sequence(
+            np.posInterval(0.15, np_pos + Vec3(0, 0, 6), np_pos, blendType=blend_type),
+            np.posInterval(0.15, np_pos, np_pos + Vec3(0, 0, 6), blendType=blend_type)).loop()
+
+        np = model.find("**/MBFrontBack")
+        np_pos = np.get_pos() - Vec3(0, 0, 2)
+        Sequence(
+            np.posInterval(0.15, np_pos + Vec3(0, 6, 0), np_pos, blendType=blend_type),
+            np.posInterval(0.15, np_pos, np_pos + Vec3(0, 6, 0), blendType=blend_type)).loop()
+
+        np = model.find("**/MBScale")
+        Sequence(
+            np.scaleInterval(0.2, Vec3(1.5), Vec3(1), blendType=blend_type),
+            np.scaleInterval(0.2, Vec3(1), Vec3(1.5), blendType=blend_type)).loop()
+
+
+
+
+        # Generate temperature lamps
+        self._lights = []
         light_key = lambda light: int(light.get_name().split("LampLum")[-1])
         lumlamps = sorted(model.find_all_matches("**/LampLum*"), key=light_key)
         for lumlamp in lumlamps:
@@ -82,8 +107,8 @@ class MainApp(ShowBase):
             light.lumens = self.half_lumens
             light.pos = lumlamp.get_pos(self.render)
             light.radius = self.lamp_radius
-            light.casts_shadows = True
-            light.shadow_map_resolution = 512
+            light.casts_shadows = False
+            light.shadow_map_resolution = 256
             self.render_pipeline.add_light(light)
 
             # Put Pandas on the edges
@@ -109,12 +134,12 @@ class MainApp(ShowBase):
         self.day_time = 0.3
         self.time_direction = 0
 
+        # Keys to modify the time, disabled in the demo
         self.accept("k", self.reset)
         self.accept("p", self.set_time_direction, [1,])
         self.accept("p-up", self.set_time_direction, [0,])
         self.accept("i", self.set_time_direction, [-1,])
         self.accept("i-up", self.set_time_direction, [0,])
-
 
         self.addTask(self.update, "update")
 
@@ -132,9 +157,9 @@ class MainApp(ShowBase):
             brightness = math.sin(0.4 * i + frame_time * 4.0)
             light.lumens = max(0, self.half_lumens / 2 + brightness * self.half_lumens)
 
-        self.day_time += globalClock.get_dt() / 40.0 * self.time_direction
-
-        self.render_pipeline.daytime_mgr.time = self.day_time
+        # Time control, disabled in the demo
+        # self.day_time += globalClock.get_dt() / 40.0 * self.time_direction
+        # self.render_pipeline.daytime_mgr.time = self.day_time
 
         return task.cont
 

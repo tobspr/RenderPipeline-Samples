@@ -68,6 +68,8 @@ class World(ShowBase):
 
         # ------ End of render pipeline code, thats it! ------
 
+        # Set time of day
+        self.render_pipeline.daytime_mgr.time = 0.32
 
         # Use a special effect for rendering the scene, this is because the
         # roaming ralph model has no normals or valid materials

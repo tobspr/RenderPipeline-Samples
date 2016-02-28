@@ -49,6 +49,9 @@ class MainApp(ShowBase):
 
         # ------ End of render pipeline code, thats it! ------
 
+        # Set time of day
+        self.render_pipeline.daytime_mgr.time = 0.76
+
         # Load the scene
         model = loader.loadModel("scene/TestScene.bam")
         model.reparent_to(render)
@@ -58,6 +61,11 @@ class MainApp(ShowBase):
 
         # Load some fancy ies profile
         ies_profile = self.render_pipeline.load_ies_profile("data/ies_profiles/defined.ies")
+
+        # Add some environment probe
+        probe = self.render_pipeline.add_environment_probe()
+        probe.set_pos(0, 0, 5)
+        probe.set_scale(20, 20, 12)
 
         # Add some random lights
         sqr = 2
@@ -80,7 +88,7 @@ class MainApp(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(3, 25, 8), Vec3(5, 0, 0))
+        self.controller.set_initial_position(Vec3(16.9, -13.4, 5.7), Vec3(9.6, -2.5, 4.6))
         self.controller.setup()
 
 MainApp().run()

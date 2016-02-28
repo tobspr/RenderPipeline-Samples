@@ -43,19 +43,19 @@ class GameControl(ShowBase):
         sys.path.insert(0, pipeline_path)
 
         # Use the utility script to import the render pipeline classes
-        from render_pipeline_importer import RenderPipeline
+        from rpcore import RenderPipeline
 
         self.render_pipeline = RenderPipeline(self)
         self.render_pipeline.set_empty_loading_screen()
         self.render_pipeline.create()
 
         # [Optional] use the default skybox, you can use your own skybox as well
-        self.render_pipeline.create_default_skybox()
+        # self.render_pipeline.create_default_skybox()
 
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.set_time(0.5)
+        self.render_pipeline.daytime_mgr.time = 0.6
 
         self.menu = Menu(self)
         self.level = Level(self)
