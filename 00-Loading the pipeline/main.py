@@ -7,8 +7,7 @@ applications on this skeleton.
 
 """
 
-import os, sys
-from panda3d.core import load_prc_file_data
+import sys
 from direct.showbase.ShowBase import ShowBase
 
 class Application(ShowBase):

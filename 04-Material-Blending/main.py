@@ -1,24 +1,23 @@
+"""
 
-# Disable the "xxx has no yyy member" error, pylint seems to be unable to detect
-# the properties of a nodepath
-# pylint: disable=E1101
+Material blending sample
+
+This shows how to use the material blend effect which comes with the pipeline,
+and supports blending for up to 4 materials.
+
+"""
 
 from __future__ import print_function
 
 import os
 import sys
-import math
-from random import random, randint, seed
 from panda3d.core import Vec3, load_prc_file_data, TextureAttrib
 from direct.showbase.ShowBase import ShowBase
 
 # Switch into the current directory
 os.chdir(os.path.realpath(os.path.dirname(__file__)))
 
-# Append the current directory to the path
-sys.path.insert(0, os.getcwd())
-
-class MainApp(ShowBase):
+class Application(ShowBase):
 
     """ Main Testing Showbase """
 
@@ -28,7 +27,6 @@ class MainApp(ShowBase):
         load_prc_file_data("", """
         win-size 1600 900
         window-title Render Pipeline by tobspr
-        icon-filename Data/GUI/icon.ico
         """)
 
         # ------ Begin of render pipeline code ------
@@ -54,6 +52,9 @@ class MainApp(ShowBase):
 
         # ------ End of render pipeline code, thats it! ------
 
+        # Set time of day
+        self.render_pipeline.daytime_mgr.time = 0.755
+
         # Load ground plane
         plane = self.loader.loadModel("data/builtin_models/plane/plane.bam")
         plane.set_scale(10.0)
@@ -62,7 +63,6 @@ class MainApp(ShowBase):
         # Load the scene
         model = loader.loadModel("scene/Scene.bam")
         model.reparent_to(render)
-        model.set_z(1)
 
         # Set the material blending effect on the terrain
         terrain = model.find("**/Terrain")
@@ -88,7 +88,7 @@ class MainApp(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(0, -12, 14), Vec3(0, 0, 6))
+        self.controller.set_initial_position(Vec3(-10.4, 11.3, 9.4), Vec3(0, 0, 2))
         self.controller.setup()
 
-MainApp().run()
+Application().run()

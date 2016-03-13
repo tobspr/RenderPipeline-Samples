@@ -22,7 +22,6 @@ class GameControl(ShowBase):
         load_prc_file_data("", "textures-power-2 none")
         load_prc_file_data("", "win-size 1600 900")
         # load_prc_file_data("", "fullscreen #t")
-        # load_prc_file_data("", "win-size 2560 1440")
         load_prc_file_data("", "window-title cuboid")
         load_prc_file_data("", "icon-filename res/icon.ico")
 
@@ -46,6 +45,9 @@ class GameControl(ShowBase):
         from rpcore import RenderPipeline
 
         self.render_pipeline = RenderPipeline(self)
+        self.render_pipeline.mount_mgr.mount()
+        self.render_pipeline.load_settings("/$$rpconfig/pipeline.yaml")
+        self.render_pipeline.settings["pipeline.display_debugger"] = False
         self.render_pipeline.set_empty_loading_screen()
         self.render_pipeline.create()
 
@@ -54,8 +56,9 @@ class GameControl(ShowBase):
 
         # ------ End of render pipeline code, thats it! ------
 
+
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.6
+        self.render_pipeline.daytime_mgr.time = 0.812
 
         self.menu = Menu(self)
         self.level = Level(self)

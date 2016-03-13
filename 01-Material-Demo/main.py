@@ -1,29 +1,29 @@
+"""
 
-# Disable the "xxx has no yyy member" error, pylint seems to be unable to detect
-# the properties of a nodepath
-# pylint: disable=E1101
+Material Demo
+
+This demonstrates the various materials the pipeline supports.
+It is also a reference scene, for testing BRDF changes.
+
+"""
 
 from __future__ import print_function
 
 import os
 import sys
-import math
-from random import random, randint, seed
 from panda3d.core import Vec3, load_prc_file_data
 from direct.showbase.ShowBase import ShowBase
 
 # Change to the current directory
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-class MainApp(ShowBase):
+class Application(ShowBase):
     def __init__(self):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
             win-size 1600 900
-            # win-size 1920 1080
             window-title Render Pipeline by tobspr
-            icon-filename Data/GUI/icon.ico
         """)
 
         # ------ Begin of render pipeline code ------
@@ -57,27 +57,27 @@ class MainApp(ShowBase):
         model.reparent_to(render)
 
         # Enable parallax mapping on the floor
-        self.render_pipeline.set_effect(model.find("**/FloorPlane"), "effects/default.yaml", {"parallax_mapping": True}, 100)
+        self.render_pipeline.set_effect(model.find("**/FloorPlane"),
+            "effects/default.yaml", {"parallax_mapping": True}, 100)
 
-        # Load some fancy ies profile
-        ies_profile = self.render_pipeline.load_ies_profile("data/ies_profiles/defined.ies")
-
-        # Add some environment probe
+        # Add some environment probe to provide better reflections
         probe = self.render_pipeline.add_environment_probe()
         probe.set_pos(0, 0, 5)
-        probe.set_scale(20, 20, 12)
+        probe.set_scale(25, 25, 12)
 
         # Add some random lights
-        sqr = 2
-        seed(3)
-        for x in range(sqr):
-            for y in range(sqr):
+        num_lights = 2
+
+        # Load some ies profile
+        ies_profile = self.render_pipeline.load_ies_profile("data/ies_profiles/defined.ies")
+        for x in range(num_lights):
+            for y in range(num_lights):
                 light = SpotLight()
                 light.direction = (0, 0, -1)
                 light.fov = 110.0
                 light.color = (1, 1, 1.5)
-                light.lumens = 1.0
-                pos_x, pos_y = (x-sqr//2) * 7.0 + 5.0, (y-sqr//2) * 7.0 + 5.0
+                light.lumens = 3.0
+                pos_x, pos_y = (x-num_lights//2) * 7.0 + 5.0, (y-num_lights//2) * 7.0 + 5.0
                 light.pos = (pos_x, pos_y, 12.0)
                 light.radius = 35.0
                 light.casts_shadows = True
@@ -91,4 +91,4 @@ class MainApp(ShowBase):
         self.controller.set_initial_position(Vec3(16.9, -13.4, 5.7), Vec3(9.6, -2.5, 4.6))
         self.controller.setup()
 
-MainApp().run()
+Application().run()

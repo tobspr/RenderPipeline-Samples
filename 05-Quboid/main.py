@@ -6,7 +6,7 @@ import os
 import sys
 
 print("This sample is currently broken! Please wait until it is fixed. You can "
-      "run it on your own risk by commenting the line below.")
+      "run it on your own risk by commenting line 10 in this file.")
 sys.exit(0)
 
 # Change to the current directory

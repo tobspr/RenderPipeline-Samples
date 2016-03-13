@@ -1,11 +1,10 @@
-
-
 """
+
+Roaming Ralph Sample (modified)
 
 This is the default roaming ralph sample, with the render pipeline.
 Using the render pipeline is only the matter of a few lines, which have
 been explicitely marked.
-
 
 """
 
@@ -42,7 +41,6 @@ class World(ShowBase):
         load_prc_file_data("", """
         win-size 1600 900
         window-title Render Pipeline by tobspr
-        icon-filename Data/GUI/icon.ico
         """)
 
         # ------ Begin of render pipeline code ------
@@ -61,10 +59,6 @@ class World(ShowBase):
         from rpcore import RenderPipeline, SpotLight
         self.render_pipeline = RenderPipeline(self)
         self.render_pipeline.create()
-
-        # This is a helper class for better camera movement - its not really
-        # a rendering element, but it included for convenience
-        from rpcore.util.movement_controller import MovementController
 
         # ------ End of render pipeline code, thats it! ------
 

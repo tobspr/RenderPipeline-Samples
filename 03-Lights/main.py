@@ -1,3 +1,10 @@
+"""
+
+Lights sample
+
+This sample shows how to setup multiple lights and load them from a .bam file.
+
+"""
 
 # Disable the "xxx has no yyy member" error, pylint seems to be unable to detect
 # the properties of a nodepath
@@ -25,9 +32,7 @@ class MainApp(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
         win-size 1600 900
-        # win-size 1920 1080
         window-title Render Pipeline by tobspr
-        icon-filename Data/GUI/icon.ico
         """)
 
         # ------ Begin of render pipeline code ------
@@ -63,11 +68,6 @@ class MainApp(ShowBase):
         model = loader.loadModel("scene/Scene.bam")
         model.reparent_to(render)
 
-        for np in model.find_all_matches("**/ENVPROBE*"):
-            probe = self.render_pipeline.add_environment_probe()
-            probe.set_mat(np.get_mat())
-
-
         # Animate balls, this is for testing the motion blur
         blend_type = "noBlend"
 
@@ -90,9 +90,6 @@ class MainApp(ShowBase):
         Sequence(
             np.scaleInterval(0.2, Vec3(1.5), Vec3(1), blendType=blend_type),
             np.scaleInterval(0.2, Vec3(1), Vec3(1.5), blendType=blend_type)).loop()
-
-
-
 
         # Generate temperature lamps
         self._lights = []
@@ -125,6 +122,8 @@ class MainApp(ShowBase):
                 panda.set_y(panda.get_y() - 3.0)
 
             self._lights.append(light)
+
+        self.render_pipeline.prepare_scene(model)
 
         # Init movement controller
         self.controller = MovementController(self)
