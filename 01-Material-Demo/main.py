@@ -40,8 +40,8 @@ class Application(ShowBase):
         sys.path.insert(0, pipeline_path)
 
         from rpcore import RenderPipeline, SpotLight
-        self.render_pipeline = RenderPipeline(self)
-        self.render_pipeline.create()
+        self.render_pipeline = RenderPipeline()
+        self.render_pipeline.create(self)
 
         # This is a helper class for better camera movement - its not really
         # a rendering element, but it included for convenience

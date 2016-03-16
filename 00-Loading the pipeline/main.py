@@ -5,6 +5,9 @@ Simplest possible application using the render pipeline.
 This sample will not show any fancy rendering output, but you can base your own
 applications on this skeleton.
 
+This is the preferred way of initializing the pipeline, however you can find
+alternative ways in the other included files.
+
 """
 
 import sys
@@ -20,13 +23,14 @@ class Application(ShowBase):
         # able to import the pipeline classes. In case you placed the render
         # pipeline in a subfolder of your project, you have to adjust this.
         sys.path.insert(0, "../../")
+        sys.path.insert(0, "../../RenderPipeline")
 
         # Import render pipeline classes
         from rpcore import RenderPipeline, SpotLight
 
         # Construct and create the pipeline
-        self.render_pipeline = RenderPipeline(self)
-        self.render_pipeline.create()
+        self.render_pipeline = RenderPipeline()
+        self.render_pipeline.create(self)
 
         # Done! You can start setting up your application stuff as regular now.
 

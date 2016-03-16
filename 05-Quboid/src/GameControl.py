@@ -44,12 +44,12 @@ class GameControl(ShowBase):
         # Use the utility script to import the render pipeline classes
         from rpcore import RenderPipeline
 
-        self.render_pipeline = RenderPipeline(self)
+        self.render_pipeline = RenderPipeline()
         self.render_pipeline.mount_mgr.mount()
         self.render_pipeline.load_settings("/$$rpconfig/pipeline.yaml")
         self.render_pipeline.settings["pipeline.display_debugger"] = False
         self.render_pipeline.set_empty_loading_screen()
-        self.render_pipeline.create()
+        self.render_pipeline.create(self)
 
         # [Optional] use the default skybox, you can use your own skybox as well
         # self.render_pipeline.create_default_skybox()

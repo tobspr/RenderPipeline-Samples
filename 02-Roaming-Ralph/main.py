@@ -57,8 +57,8 @@ class World(ShowBase):
         sys.path.insert(0, pipeline_path)
 
         from rpcore import RenderPipeline, SpotLight
-        self.render_pipeline = RenderPipeline(self)
-        self.render_pipeline.create()
+        self.render_pipeline = RenderPipeline()
+        self.render_pipeline.create(self)
 
         # ------ End of render pipeline code, thats it! ------
 
