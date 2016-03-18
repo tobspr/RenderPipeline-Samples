@@ -69,18 +69,20 @@ class World(ShowBase):
         # roaming ralph model has no normals or valid materials
         self.render_pipeline.set_effect(render, "scene-effect.yaml", {}, sort=250)
 
-        self.keyMap = {"left":0, "right":0, "forward":0, "cam-left":0, "cam-right":0}
+        self.keyMap = {"left":0, "right":0, "forward":0, "backward":0, "cam-left":0, "cam-right":0}
+        self.speed = 1.0
         base.win.setClearColor(Vec4(0,0,0,1))
 
         # Post the instructions
 
         self.title = addTitle("Panda3D Tutorial: Roaming Ralph (Walking on Uneven Terrain)")
         self.inst1 = addInstructions(0.95, "[ESC]: Quit")
-        self.inst2 = addInstructions(0.90, "[Left Arrow]: Rotate Ralph Left")
-        self.inst3 = addInstructions(0.85, "[Right Arrow]: Rotate Ralph Right")
-        self.inst4 = addInstructions(0.80, "[Up Arrow]: Run Ralph Forward")
-        self.inst6 = addInstructions(0.70, "[A]: Rotate Camera Left")
-        self.inst7 = addInstructions(0.65, "[S]: Rotate Camera Right")
+        self.inst4 = addInstructions(0.90, "[W]: Run Ralph Forward")
+        self.inst4 = addInstructions(0.85, "[S]: Run Ralph Backward")
+        self.inst2 = addInstructions(0.80, "[A]: Rotate Ralph Left")
+        self.inst3 = addInstructions(0.75, "[D]: Rotate Ralph Right")
+        self.inst6 = addInstructions(0.70, "[Left Arrow]: Rotate Camera Left")
+        self.inst7 = addInstructions(0.65, "[Right Arrow]: Rotate Camera Right")
 
         # Set up the environment
         #
@@ -121,16 +123,21 @@ class World(ShowBase):
         # Accept the control keys for movement and rotation
 
         self.accept("escape", sys.exit)
-        self.accept("arrow_left", self.setKey, ["left",1])
-        self.accept("arrow_right", self.setKey, ["right",1])
-        self.accept("arrow_up", self.setKey, ["forward",1])
-        self.accept("a", self.setKey, ["cam-left",1])
-        self.accept("s", self.setKey, ["cam-right",1])
-        self.accept("arrow_left-up", self.setKey, ["left",0])
-        self.accept("arrow_right-up", self.setKey, ["right",0])
-        self.accept("arrow_up-up", self.setKey, ["forward",0])
-        self.accept("a-up", self.setKey, ["cam-left",0])
-        self.accept("s-up", self.setKey, ["cam-right",0])
+        self.accept("a", self.setKey, ["left",1])
+        self.accept("d", self.setKey, ["right",1])
+        self.accept("w", self.setKey, ["forward",1])
+        self.accept("s", self.setKey, ["backward",1])
+        self.accept("arrow_left", self.setKey, ["cam-left",1])
+        self.accept("arrow_right", self.setKey, ["cam-right",1])
+        self.accept("a-up", self.setKey, ["left",0])
+        self.accept("d-up", self.setKey, ["right",0])
+        self.accept("w-up", self.setKey, ["forward",0])
+        self.accept("s-up", self.setKey, ["backward",0])
+        self.accept("arrow_left-up", self.setKey, ["cam-left",0])
+        self.accept("arrow_right-up", self.setKey, ["cam-right",0])
+        self.accept("=", self.adjustSpeed, [0.25])
+        self.accept("+", self.adjustSpeed, [0.25])
+        self.accept("-", self.adjustSpeed, [-0.25])
 
         taskMgr.add(self.move,"moveTask")
 
@@ -195,6 +202,11 @@ class World(ShowBase):
     def setKey(self, key, value):
         self.keyMap[key] = value
 
+    # Adjust movement speed
+    def adjustSpeed(self, delta):
+        newSpeed = self.speed + delta
+        if 0 <= newSpeed <= 3:
+          self.speed = newSpeed
 
     # Accepts arrow keys to move either the player or the menu cursor,
     # Also deals with grid checking and collision detection
@@ -218,15 +230,18 @@ class World(ShowBase):
 
         if (self.keyMap["left"]!=0):
             self.ralph.setH(self.ralph.getH() + 300 * globalClock.getDt())
-        if (self.keyMap["right"]!=0):
+        elif (self.keyMap["right"]!=0):
             self.ralph.setH(self.ralph.getH() - 300 * globalClock.getDt())
         if (self.keyMap["forward"]!=0):
-            self.ralph.setY(self.ralph, -25 * globalClock.getDt())
+            self.ralph.setY(self.ralph, -25 * self.speed * globalClock.getDt())
+        elif (self.keyMap["backward"]!=0):
+            self.ralph.setY(self.ralph, 25 * self.speed * globalClock.getDt())
 
         # If ralph is moving, loop the run animation.
         # If he is standing still, stop the animation.
 
-        if (self.keyMap["forward"]!=0) or (self.keyMap["left"]!=0) or (self.keyMap["right"]!=0):
+        if (self.keyMap["forward"]!=0) or (self.keyMap["backward"]!=0) or \
+           (self.keyMap["left"]!=0) or (self.keyMap["right"]!=0):
             if self.isMoving is False:
                 self.ralph.loop("run")
                 self.isMoving = True
