@@ -17,6 +17,23 @@ from direct.showbase.ShowBase import ShowBase
 # Change to the current directory
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
+# Insert the pipeline path to the system path, this is required to be
+# able to import the pipeline classes
+pipeline_path = "../../"
+
+# Just a special case for my development setup, so I don't accidentally
+# commit a wrong path. You can remove this in your own programs.
+if not os.path.isfile(os.path.join(pipeline_path, "setup.py")):
+    pipeline_path = "../../RenderPipeline/"
+
+sys.path.insert(0, pipeline_path)
+
+from rpcore import RenderPipeline, SpotLight
+
+# This is a helper class for better camera movement - its not really
+# a rendering element, but it included for convenience
+from rpcore.util.movement_controller import MovementController
+
 class Application(ShowBase):
     def __init__(self):
 
@@ -26,34 +43,17 @@ class Application(ShowBase):
             window-title Render Pipeline by tobspr
         """)
 
-        # ------ Begin of render pipeline code ------
-
-        # Insert the pipeline path to the system path, this is required to be
-        # able to import the pipeline classes
-        pipeline_path = "../../"
-
-        # Just a special case for my development setup, so I don't accidentally
-        # commit a wrong path. You can remove this in your own programs.
-        if not os.path.isfile(os.path.join(pipeline_path, "setup.py")):
-            pipeline_path = "../../RenderPipeline/"
-
-        sys.path.insert(0, pipeline_path)
-
-        from rpcore import RenderPipeline, SpotLight
         self.render_pipeline = RenderPipeline()
         self.render_pipeline.create(self)
-
-        # This is a helper class for better camera movement - its not really
-        # a rendering element, but it included for convenience
-        from rpcore.util.movement_controller import MovementController
-
-        # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
         self.render_pipeline.daytime_mgr.time = 0.76
 
         # Load the scene
-        model = loader.loadModel("scene/TestScene.bam")
+        model = loader.load_model("scene/TestScene.bam", callback=self.continue_init)
+
+    def continue_init(self, model):
+        """ Gets called when the async loading finished """
         model.reparent_to(render)
 
         # Enable parallax mapping on the floor
@@ -69,7 +69,7 @@ class Application(ShowBase):
         num_lights = 2
 
         # Load some ies profile
-        ies_profile = self.render_pipeline.load_ies_profile("data/ies_profiles/defined.ies")
+        ies_profile = self.render_pipeline.load_ies_profile("defined.ies")
         for x in range(num_lights):
             for y in range(num_lights):
                 light = SpotLight()

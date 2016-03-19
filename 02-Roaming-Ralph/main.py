@@ -26,12 +26,7 @@ SPEED = 0.5
 # Function to put instructions on the screen.
 def addInstructions(pos, msg):
     return OnscreenText(text=msg, style=1, fg=(1,1,1,1),
-                        pos=(-1.3, pos), align=TextNode.ALeft, scale = .05)
-
-# Function to put title on the screen.
-def addTitle(text):
-    return OnscreenText(text=text, style=1, fg=(1,1,1,1),
-                        pos=(1.3,-0.95), align=TextNode.ARight, scale = .07)
+                        pos=(-1.0, pos - 0.1), align=TextNode.ALeft, scale = .05)
 
 class World(ShowBase):
 
@@ -75,7 +70,6 @@ class World(ShowBase):
 
         # Post the instructions
 
-        self.title = addTitle("Panda3D Tutorial: Roaming Ralph (Walking on Uneven Terrain)")
         self.inst1 = addInstructions(0.95, "[ESC]: Quit")
         self.inst4 = addInstructions(0.90, "[W]: Run Ralph Forward")
         self.inst4 = addInstructions(0.85, "[S]: Run Ralph Backward")
