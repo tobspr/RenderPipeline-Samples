@@ -21,7 +21,6 @@ class MainApp(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
             win-size 1600 900
-            # win-size 1920 1080
             window-title Render Pipeline by tobspr
         """)
 
@@ -57,7 +56,7 @@ class MainApp(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(-5.2, -3, 1.1), Vec3(-3.5, -1.9, 1))
+        self.controller.set_initial_position_hpr(Vec3(-4.8, 3.0, 1.0), Vec3(-127, -2.73, 0.0))
         self.controller.setup()
 
 
@@ -93,6 +92,6 @@ class MainApp(ShowBase):
             (Vec3(5.76941871643, -1.32986474037, 5.50954580307), Vec3(631.920043945, -361.226593018, 0.0)),
             (Vec3(3.67592144012, -0.432737737894, 5.55842065811), Vec3(629.557556152, -360.573272705, 0.0)),
         )
-        self.controller.play_motion_path(mopath)
+        self.controller.play_motion_path(mopath, 2.3)
 
 MainApp().run()
