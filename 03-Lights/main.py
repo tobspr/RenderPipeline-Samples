@@ -59,7 +59,7 @@ class MainApp(ShowBase):
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.32
+        self.render_pipeline.daytime_mgr.time = 0.729
         self.half_lumens = 160
         # self.half_lumens = 20
         self.lamp_fov = 70
@@ -127,7 +127,7 @@ class MainApp(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(3, 25, 8), Vec3(5, 0, 0))
+        self.controller.set_initial_position(Vec3(-18.4, 7.4, 7.7), Vec3(-12.5, 1.7, 6.6))
         self.controller.setup()
 
         self.day_time = 0.3
