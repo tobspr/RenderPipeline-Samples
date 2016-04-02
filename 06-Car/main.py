@@ -20,9 +20,9 @@ class MainApp(ShowBase):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-            win-size 1600 900
+            # win-size 1600 900
             # win-size 1920 1080
-            # win-size 2560 1440
+            win-size 2560 1440
             window-title Render Pipeline by tobspr
         """)
 
@@ -49,7 +49,7 @@ class MainApp(ShowBase):
 
         # ------ End of render pipeline code, thats it! ------
 
-        self.render_pipeline.daytime_mgr.time = 0.741
+        self.render_pipeline.daytime_mgr.time = 0.324
 
         # Load the scene
         model = loader.loadModel("scene/scene.bam")
@@ -105,6 +105,5 @@ class MainApp(ShowBase):
             (Vec3(-9.60101795197, 7.48619365692, 1.2708107233), Vec3(587.8203125, -1.08885848522, 4.64905796514e-22)),
         )
         self.controller.play_motion_path(mopath, 2.3)
-        # self.controller.play_motion_path(mopath, 0.5)
 
 MainApp().run()
