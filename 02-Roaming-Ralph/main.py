@@ -26,7 +26,7 @@ SPEED = 0.5
 # Function to put instructions on the screen.
 def addInstructions(pos, msg):
     return OnscreenText(text=msg, style=1, fg=(1,1,1,1),
-                        pos=(-1.0, pos - 0.1), align=TextNode.ALeft, scale = .05)
+                        pos=(-1.0, pos - 0.1), align=TextNode.ALeft, scale=.035)
 
 class World(ShowBase):
 
@@ -70,13 +70,13 @@ class World(ShowBase):
 
         # Post the instructions
 
-        self.inst1 = addInstructions(0.95, "[ESC]: Quit")
-        self.inst4 = addInstructions(0.90, "[W]: Run Ralph Forward")
-        self.inst4 = addInstructions(0.85, "[S]: Run Ralph Backward")
-        self.inst2 = addInstructions(0.80, "[A]: Rotate Ralph Left")
-        self.inst3 = addInstructions(0.75, "[D]: Rotate Ralph Right")
-        self.inst6 = addInstructions(0.70, "[Left Arrow]: Rotate Camera Left")
-        self.inst7 = addInstructions(0.65, "[Right Arrow]: Rotate Camera Right")
+        self.inst1 = addInstructions(0.95, "[ESC]  Quit")
+        self.inst4 = addInstructions(0.90, "[W]  Run Ralph Forward")
+        self.inst4 = addInstructions(0.85, "[S]  Run Ralph Backward")
+        self.inst2 = addInstructions(0.80, "[A]  Rotate Ralph Left")
+        self.inst3 = addInstructions(0.75, "[D]  Rotate Ralph Right")
+        self.inst6 = addInstructions(0.70, "[Left Arrow]  Rotate Camera Left")
+        self.inst7 = addInstructions(0.65, "[Right Arrow]  Rotate Camera Right")
 
         # Set up the environment
         #
@@ -211,9 +211,9 @@ class World(ShowBase):
 
         base.camera.lookAt(self.ralph)
         if (self.keyMap["cam-left"]!=0):
-            base.camera.setX(base.camera, -20 * globalClock.getDt())
-        if (self.keyMap["cam-right"]!=0):
             base.camera.setX(base.camera, +20 * globalClock.getDt())
+        if (self.keyMap["cam-right"]!=0):
+            base.camera.setX(base.camera, -20 * globalClock.getDt())
 
         # save ralph's initial position so that we can restore it,
         # in case he falls off the map or runs into something.

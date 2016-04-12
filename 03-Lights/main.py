@@ -60,8 +60,8 @@ class MainApp(ShowBase):
 
         # Set time of day
         self.render_pipeline.daytime_mgr.time = 0.729
-        self.half_lumens = 160
-        # self.half_lumens = 20
+        self.half_energy = 5000
+        # self.half_energy = 20
         self.lamp_fov = 70
         self.lamp_radius = 10
         # Load the scene
@@ -101,7 +101,7 @@ class MainApp(ShowBase):
             light.direction = (0, -1.5, -1)
             light.fov = self.lamp_fov
             light.set_color_from_temperature(lum * 1000.0)
-            light.lumens = self.half_lumens
+            light.energy = self.half_energy
             light.pos = lumlamp.get_pos(self.render)
             light.radius = self.lamp_radius
             light.casts_shadows = False
@@ -153,8 +153,8 @@ class MainApp(ShowBase):
         frame_time = globalClock.get_frame_time()
         # Make the lights glow
         for i, light in enumerate(self._lights):
-            brightness = math.sin(0.4 * i + frame_time * 4.0)
-            light.lumens = max(0, self.half_lumens / 2 + brightness * self.half_lumens)
+            brightness = math.sin(0.4 * i + frame_time * 1.0)
+            light.energy = max(0, self.half_energy / 2 + brightness * self.half_energy)
 
         # Time control, disabled in the demo
         # self.day_time += globalClock.get_dt() / 40.0 * self.time_direction

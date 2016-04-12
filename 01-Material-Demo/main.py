@@ -76,7 +76,7 @@ class Application(ShowBase):
                 light.direction = (0, 0, -1)
                 light.fov = 110.0
                 light.color = (1, 1, 1.5)
-                light.lumens = 3.0
+                light.energy = 3.0
                 pos_x, pos_y = (x-num_lights//2) * 7.0 + 5.0, (y-num_lights//2) * 7.0 + 5.0
                 light.pos = (pos_x, pos_y, 12.0)
                 light.radius = 35.0
