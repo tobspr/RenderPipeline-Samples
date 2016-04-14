@@ -21,8 +21,6 @@ class MainApp(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
             win-size 1600 900
-            # win-size 1920 1080
-            # win-size 2560 1440
             window-title Render Pipeline by tobspr
         """)
 
@@ -49,23 +47,26 @@ class MainApp(ShowBase):
 
         # ------ End of render pipeline code, thats it! ------
 
-        self.render_pipeline.daytime_mgr.time = 0.324
+        self.render_pipeline.daytime_mgr.time = 0.839
 
         # Load the scene
         model = loader.loadModel("scene/scene.bam")
+        # model = loader.loadModel("scene2/Scene.bam")
+
         model.reparent_to(render)
         self.render_pipeline.prepare_scene(model)
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position_hpr(Vec3(-10.6577367783, 7.90177536011, 1.27759826183), Vec3(-124.781364441, -0.544444441795, 0.0))
+        self.controller.set_initial_position(
+            Vec3(-4.2, 3.1, 1.3), Vec3(-3.4, 2.3, 1.2))
         self.controller.setup()
+
 
         base.accept("l", self.tour)
 
     def tour(self):
         """ Camera flythrough """
-        # Motion path
         mopath = (
             (Vec3(-10.6577367783, 7.90177536011, 1.27759826183), Vec3(-124.781364441, -0.544444441795, 0.0)),
             (Vec3(-7.65479278564, 0.0209505427629, 1.05313777924), Vec3(-89.737663269, -0.27222442627, 1.34704433107e-15)),

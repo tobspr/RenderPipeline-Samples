@@ -24,7 +24,6 @@ class MainApp(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
             win-size 1600 900
-            # win-size 1920 1080
             window-title Render Pipeline by tobspr
         """)
 
@@ -52,7 +51,7 @@ class MainApp(ShowBase):
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.76
+        self.render_pipeline.daytime_mgr.time = 0.769
 
         # Load the scene
         model = loader.loadModel("scene/TestScene.bam")
@@ -62,7 +61,8 @@ class MainApp(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(16.9, -13.4, 5.7), Vec3(9.6, -2.5, 4.6))
+        self.controller.set_initial_position(
+            Vec3(6.6, -18.8, 4.5), Vec3(4.7, -16.7, 3.4))
         self.controller.setup()
 
         base.accept("l", self.tour)

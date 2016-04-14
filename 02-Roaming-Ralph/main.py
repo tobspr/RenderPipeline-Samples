@@ -26,7 +26,7 @@ SPEED = 0.5
 # Function to put instructions on the screen.
 def addInstructions(pos, msg):
     return OnscreenText(text=msg, style=1, fg=(1,1,1,1),
-                        pos=(-1.0, pos - 0.1), align=TextNode.ALeft, scale=.035)
+                        pos=(-0.9, pos - 0.2), align=TextNode.ALeft, scale=.035)
 
 class World(ShowBase):
 
@@ -99,14 +99,12 @@ class World(ShowBase):
         self.environ.find("**/wall").remove_node()
 
         # Create the main character, Ralph
-
-        ralphStartPos = self.environ.find("**/start_point").getPos()
         self.ralph = Actor("resources/ralph",
                                  {"run":"resources/ralph-run",
                                   "walk":"resources/ralph-walk"})
         self.ralph.reparentTo(render)
         self.ralph.setScale(.2)
-        self.ralph.setPos(ralphStartPos)
+        self.ralph.setPos(Vec3(-110.9, 29.4, 1.8))
 
         # Create a floater object.  We use the "floater" as a temporary
         # variable in a variety of calculations.
@@ -141,7 +139,7 @@ class World(ShowBase):
         # Set up the camera
 
         base.disableMouse()
-        base.camera.setPos(self.ralph.getX(),self.ralph.getY()+10,2)
+        base.camera.setPos(self.ralph.getX() + 10,self.ralph.getY() + 10, 2)
 
         # We will detect the height of the terrain by creating a collision
         # ray and casting it downward toward the terrain.  One ray will
@@ -149,7 +147,6 @@ class World(ShowBase):
         # A ray may hit the terrain, or it may hit a rock or a tree.  If it
         # hits the terrain, we can detect the height.  If it hits anything
         # else, we rule that the move is illegal.
-
         self.cTrav = CollisionTraverser()
 
         self.ralphGroundRay = CollisionRay()
@@ -271,8 +268,6 @@ class World(ShowBase):
         for i in range(self.ralphGroundHandler.getNumEntries()):
             entry = self.ralphGroundHandler.getEntry(i)
             entries.append(entry)
-        entries.sort(lambda x,y: cmp(y.getSurfacePoint(render).getZ(),
-                                     x.getSurfacePoint(render).getZ()))
         if (len(entries)>0) and (entries[0].getIntoNode().getName() == "terrain"):
             self.ralph.setZ(entries[0].getSurfacePoint(render).getZ())
         else:
@@ -285,8 +280,6 @@ class World(ShowBase):
         for i in range(self.camGroundHandler.getNumEntries()):
             entry = self.camGroundHandler.getEntry(i)
             entries.append(entry)
-        entries.sort(lambda x,y: cmp(y.getSurfacePoint(render).getZ(),
-                                     x.getSurfacePoint(render).getZ()))
         if (len(entries)>0) and (entries[0].getIntoNode().getName() == "terrain"):
             base.camera.setZ(entries[0].getSurfacePoint(render).getZ()+1.0)
         if (base.camera.getZ() < self.ralph.getZ() + 2.0):
