@@ -59,7 +59,8 @@ class MainApp(ShowBase):
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.729
+        self.render_pipeline.daytime_mgr.time = 0.825
+
         self.half_energy = 5000
         # self.half_energy = 20
         self.lamp_fov = 70
@@ -71,25 +72,27 @@ class MainApp(ShowBase):
         # Animate balls, this is for testing the motion blur
         blend_type = "noBlend"
 
-        np = model.find("**/MBRotate")
-        np.hprInterval(1.5, Vec3(360, 360, 0), Vec3(0, 0, 0), blendType=blend_type).loop()
+        if False: #xxx
+            np = model.find("**/MBRotate")
+            np.hprInterval(1.5, Vec3(360, 360, 0), Vec3(0, 0, 0), blendType=blend_type).loop()
 
-        np = model.find("**/MBUpDown")
-        np_pos = np.get_pos() - Vec3(0, 0, 2)
-        Sequence(
-            np.posInterval(0.15, np_pos + Vec3(0, 0, 6), np_pos, blendType=blend_type),
-            np.posInterval(0.15, np_pos, np_pos + Vec3(0, 0, 6), blendType=blend_type)).loop()
+            np = model.find("**/MBUpDown")
+            np_pos = np.get_pos() - Vec3(0, 0, 2)
+            Sequence(
+                np.posInterval(0.15, np_pos + Vec3(0, 0, 6), np_pos, blendType=blend_type),
+                np.posInterval(0.15, np_pos, np_pos + Vec3(0, 0, 6), blendType=blend_type)).loop()
 
-        np = model.find("**/MBFrontBack")
-        np_pos = np.get_pos() - Vec3(0, 0, 2)
-        Sequence(
-            np.posInterval(0.15, np_pos + Vec3(0, 6, 0), np_pos, blendType=blend_type),
-            np.posInterval(0.15, np_pos, np_pos + Vec3(0, 6, 0), blendType=blend_type)).loop()
+            np = model.find("**/MBFrontBack")
+            np_pos = np.get_pos() - Vec3(0, 0, 2)
+            Sequence(
+                np.posInterval(0.15, np_pos + Vec3(0, 6, 0), np_pos, blendType=blend_type),
+                np.posInterval(0.15, np_pos, np_pos + Vec3(0, 6, 0), blendType=blend_type)).loop()
 
-        np = model.find("**/MBScale")
-        Sequence(
-            np.scaleInterval(0.2, Vec3(1.5), Vec3(1), blendType=blend_type),
-            np.scaleInterval(0.2, Vec3(1), Vec3(1.5), blendType=blend_type)).loop()
+            np = model.find("**/MBScale")
+            Sequence(
+                np.scaleInterval(0.2, Vec3(1.5), Vec3(1), blendType=blend_type),
+                np.scaleInterval(0.2, Vec3(1), Vec3(1.5), blendType=blend_type)).loop()
+
 
         # Generate temperature lamps
         self._lights = []
