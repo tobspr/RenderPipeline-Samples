@@ -53,12 +53,7 @@ class Application(ShowBase):
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.755
-
-        # Load ground plane
-        plane = self.loader.loadModel("data/builtin_models/plane/plane.bam")
-        plane.set_scale(10.0)
-        plane.reparent_to(self.render)
+        self.render_pipeline.daytime_mgr.time = 0.280
 
         # Load the scene
         model = loader.loadModel("scene/Scene.bam")
@@ -88,7 +83,7 @@ class Application(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(-10.4, 11.3, 9.4), Vec3(0, 0, 2))
+        self.controller.set_initial_position(Vec3(-15.2, -9.0, 11.8), Vec3(-12.3, -7.0, 9.7))
         self.controller.setup()
 
 Application().run()

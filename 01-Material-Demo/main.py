@@ -61,7 +61,7 @@ class Application(ShowBase):
         # Initialize movement controller
         self.controller = MovementController(self)
         self.controller.set_initial_position(
-            Vec3(16.9, -13.4, 5.7), Vec3(9.6, -2.5, 4.6))
+            Vec3(-15.0, -13.7, 5.9), Vec3(-12.0, -8.0, 4.6))
         self.controller.setup()
 
 Application().run()
