@@ -38,7 +38,8 @@ class Application(ShowBase):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-            win-size 1600 900
+            # win-size 1600 900
+            win-size 2560 1440
             window-title Render Pipeline by tobspr
             stm-max-chunk-count 2048
             gl-coordinate-system default
@@ -49,7 +50,7 @@ class Application(ShowBase):
         self.render_pipeline.create(self)
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.76
+        self.render_pipeline.daytime_mgr.time = 0.831
 
         # Add some environment probe to provide better reflections
         # probe = self.render_pipeline.add_environment_probe()
@@ -58,7 +59,7 @@ class Application(ShowBase):
          
         self.terrain_node = ShaderTerrainMesh()
         self.terrain_node.heightfield_filename = "resources/heightfield.png"
-        self.terrain_node.target_triangle_width = 10.0
+        self.terrain_node.target_triangle_width = 6.0
         self.terrain_node.generate()
          
         self.terrain_np = render.attach_new_node(self.terrain_node)
@@ -66,7 +67,7 @@ class Application(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(0, 0, 1100), Vec3(100, 100, 1000))
+        self.controller.set_initial_position(Vec3(1521, 7106, 440), Vec3(1750, 6969.4, 516.8))
         self.controller.setup()
 
         self.accept("r", self.reload_shaders)
