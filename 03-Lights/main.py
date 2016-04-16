@@ -32,7 +32,7 @@ class MainApp(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
         win-size 1600 900
-        window-title Render Pipeline by tobspr
+        window-title Render Pipeline - Lights demo
         """)
 
         # ------ Begin of render pipeline code ------
@@ -59,10 +59,9 @@ class MainApp(ShowBase):
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.825
+        self.render_pipeline.daytime_mgr.time = "4:50"
 
         self.half_energy = 5000
-        # self.half_energy = 20
         self.lamp_fov = 70
         self.lamp_radius = 10
         # Load the scene
@@ -94,6 +93,8 @@ class MainApp(ShowBase):
 
 
         # Generate temperature lamps
+        # This shows how to procedurally create lamps. In this case, we
+        # base the lights positions on empties created in blender.
         self._lights = []
         light_key = lambda light: int(light.get_name().split("LampLum")[-1])
         lumlamps = sorted(model.find_all_matches("**/LampLum*"), key=light_key)
@@ -129,7 +130,7 @@ class MainApp(ShowBase):
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(-18.4, 7.4, 7.7), Vec3(-12.5, 1.7, 6.6))
+        self.controller.set_initial_position(Vec3(23.9, 42.5, 13.4), Vec3(23.8, 33.4, 10.8))
         self.controller.setup()
 
         self.day_time = 0.3
@@ -157,11 +158,6 @@ class MainApp(ShowBase):
         for i, light in enumerate(self._lights):
             brightness = math.sin(0.4 * i + frame_time * 1.0)
             light.energy = max(0, self.half_energy / 2 + brightness * self.half_energy)
-
-        # Time control, disabled in the demo
-        # self.day_time += globalClock.get_dt() / 40.0 * self.time_direction
-        # self.render_pipeline.daytime_mgr.time = self.day_time
-
         return task.cont
 
 MainApp().run()

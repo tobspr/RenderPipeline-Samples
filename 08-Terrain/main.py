@@ -38,8 +38,7 @@ class Application(ShowBase):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-            # win-size 1600 900
-            win-size 2560 1440
+            win-size 1600 900
             window-title Render Pipeline by tobspr
             stm-max-chunk-count 2048
             gl-coordinate-system default

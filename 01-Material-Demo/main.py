@@ -40,14 +40,14 @@ class Application(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
             win-size 1600 900
-            window-title Render Pipeline by tobspr
+            window-title Render Pipeline - Material Sample
         """)
 
         self.render_pipeline = RenderPipeline()
         self.render_pipeline.create(self)
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.798
+        self.render_pipeline.daytime_mgr.time = "19:09"
 
         # Load the scene
         model = loader.load_model("scene/TestScene.bam")

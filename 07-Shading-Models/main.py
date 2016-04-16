@@ -24,7 +24,7 @@ class MainApp(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
             win-size 1600 900
-            window-title Render Pipeline by tobspr
+            window-title Render Pipeline - Shading Models Demo
         """)
 
         # ------ Begin of render pipeline code ------

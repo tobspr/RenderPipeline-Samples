@@ -26,7 +26,7 @@ class Application(ShowBase):
         # Setup window size, title and so on
         load_prc_file_data("", """
         win-size 1600 900
-        window-title Render Pipeline by tobspr
+        window-title Render Pipeline - Material blending example
         """)
 
         # ------ Begin of render pipeline code ------
@@ -53,7 +53,7 @@ class Application(ShowBase):
         # ------ End of render pipeline code, thats it! ------
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.280
+        self.render_pipeline.daytime_mgr.time = "6:43"
 
         # Load the scene
         model = loader.loadModel("scene/Scene.bam")
