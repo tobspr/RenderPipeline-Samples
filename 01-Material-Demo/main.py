@@ -47,7 +47,7 @@ class Application(ShowBase):
         self.render_pipeline.create(self)
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = "19:09"
+        self.render_pipeline.daytime_mgr.time = "19:17"
 
         # Load the scene
         model = loader.load_model("scene/TestScene.bam")
@@ -60,8 +60,9 @@ class Application(ShowBase):
 
         # Initialize movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(
-            Vec3(-15.0, -13.7, 5.9), Vec3(-12.0, -8.0, 4.6))
+        self.controller.set_initial_position_hpr(
+            Vec3(-17.2912578583, -13.290019989, 6.88211250305),
+            Vec3(-39.7285499573, -14.6770210266, 0.0))
         self.controller.setup()
 
 Application().run()

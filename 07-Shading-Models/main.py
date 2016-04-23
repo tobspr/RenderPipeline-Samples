@@ -66,6 +66,11 @@ class MainApp(ShowBase):
         self.controller.setup()
 
         base.accept("l", self.tour)
+        base.accept("r", self.reload_shaders)
+
+    def reload_shaders(self):
+        self.render_pipeline.reload_shaders()
+        self.render_pipeline.prepare_scene(render)
 
     def tour(self):
         mopath = (

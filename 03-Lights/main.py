@@ -8,7 +8,7 @@ This sample shows how to setup multiple lights and load them from a .bam file.
 
 # Disable the "xxx has no yyy member" error, pylint seems to be unable to detect
 # the properties of a nodepath
-# pylint: disable=E1101
+# pylint: disable=no-member
 
 from __future__ import print_function
 
