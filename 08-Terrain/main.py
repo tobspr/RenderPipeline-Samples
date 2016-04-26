@@ -52,22 +52,24 @@ class Application(ShowBase):
         self.render_pipeline.daytime_mgr.time = 0.831
 
         # Add some environment probe to provide better reflections
-        # probe = self.render_pipeline.add_environment_probe()
-        # probe.set_pos(0, 0, 5)
-        # probe.set_scale(25, 25, 12)
-         
+        probe = self.render_pipeline.add_environment_probe()
+        probe.set_pos(0, 0, 1000)
+        probe.set_scale(8000)
+
         self.terrain_node = ShaderTerrainMesh()
         self.terrain_node.heightfield_filename = "resources/heightfield.png"
         self.terrain_node.target_triangle_width = 6.0
         self.terrain_node.generate()
-         
+
         self.terrain_np = render.attach_new_node(self.terrain_node)
         self.terrain_np.set_scale(8192, 8192, 1000)
+        self.terrain_np.set_pos(-4096, -4096, 0)
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(1521, 7106, 440), Vec3(1750, 6969.4, 516.8))
+        self.controller.set_initial_position(Vec3(-2824, 3053, 715), Vec3(-2250, 2828, 725))
         self.controller.setup()
+
 
         self.accept("r", self.reload_shaders)
         self.reload_shaders()

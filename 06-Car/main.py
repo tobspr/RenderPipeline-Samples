@@ -59,9 +59,8 @@ class MainApp(ShowBase):
         # Init movement controller
         self.controller = MovementController(self)
         self.controller.set_initial_position(
-            Vec3(-4.2, 3.1, 1.3), Vec3(-3.4, 2.3, 1.2))
+            Vec3(-7.5, -5.3, 1.8), Vec3(-5.9, -4.0, 1.6))
         self.controller.setup()
-
 
         base.accept("l", self.tour)
 
