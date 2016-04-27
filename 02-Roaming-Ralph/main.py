@@ -140,6 +140,7 @@ class World(ShowBase):
 
         base.disableMouse()
         base.camera.setPos(self.ralph.getX() + 10,self.ralph.getY() + 10, 2)
+        base.camLens.setFov(80)
 
         # We will detect the height of the terrain by creating a collision
         # ray and casting it downward toward the terrain.  One ray will
