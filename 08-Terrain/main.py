@@ -10,7 +10,7 @@ from __future__ import print_function
 
 import os
 import sys
-from panda3d.core import Vec3, load_prc_file_data, ShaderTerrainMesh, Shader
+from panda3d.core import Vec3, load_prc_file_data, ShaderTerrainMesh
 from direct.showbase.ShowBase import ShowBase
 
 # Change to the current directory
@@ -27,7 +27,7 @@ if not os.path.isfile(os.path.join(pipeline_path, "setup.py")):
 
 sys.path.insert(0, pipeline_path)
 
-from rpcore import RenderPipeline, SpotLight
+from rpcore import RenderPipeline
 
 # This is a helper class for better camera movement - its not really
 # a rendering element, but it included for convenience
@@ -43,33 +43,39 @@ class Application(ShowBase):
             stm-max-chunk-count 2048
             gl-coordinate-system default
             stm-max-views 20
+            notify-level-linmath error
         """)
 
         self.render_pipeline = RenderPipeline()
         self.render_pipeline.create(self)
 
         # Set time of day
-        self.render_pipeline.daytime_mgr.time = 0.831
+        self.render_pipeline.daytime_mgr.time = "04:25"
 
         # Add some environment probe to provide better reflections
         probe = self.render_pipeline.add_environment_probe()
-        probe.set_pos(0, 0, 1000)
-        probe.set_scale(8000)
+        probe.set_pos(0, 0, 600)
+        probe.set_scale(8192 * 2, 8192 * 2, 1000)
 
-        self.terrain_node = ShaderTerrainMesh()
-        self.terrain_node.heightfield_filename = "resources/heightfield.png"
-        self.terrain_node.target_triangle_width = 6.0
-        self.terrain_node.generate()
+        self.terrain_np = render.attach_new_node("terrain")
 
-        self.terrain_np = render.attach_new_node(self.terrain_node)
-        self.terrain_np.set_scale(8192, 8192, 1000)
-        self.terrain_np.set_pos(-4096, -4096, 0)
+        heightfield = loader.loadTexture("resources/heightfield.png")
+
+        for x in range(3):
+            for y in range(3):
+                terrain_node = ShaderTerrainMesh()
+                terrain_node.heightfield = heightfield
+                terrain_node.target_triangle_width = 6.0
+                terrain_node.generate()
+
+                terrain_n = self.terrain_np.attach_new_node(terrain_node)
+                terrain_n.set_scale(8192, 8192, 600)
+                terrain_n.set_pos(-4096 + (x - 1) * 8192, -4096 + (y - 1) * 8192, 0)
 
         # Init movement controller
         self.controller = MovementController(self)
-        self.controller.set_initial_position(Vec3(-2824, 3053, 715), Vec3(-2250, 2828, 725))
+        self.controller.set_initial_position(Vec3(-12568, -11736, 697), Vec3(-12328, -11357, 679))
         self.controller.setup()
-
 
         self.accept("r", self.reload_shaders)
         self.reload_shaders()
@@ -79,9 +85,6 @@ class Application(ShowBase):
 
         # Set the terrain effect
         self.render_pipeline.set_effect(self.terrain_np, "effects/terrain-effect.yaml", {}, 100)
-
-
-
         base.accept("l", self.tour)
 
 
