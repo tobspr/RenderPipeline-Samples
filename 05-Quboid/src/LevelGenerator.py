@@ -17,18 +17,18 @@ class LevelGenerator:
         failcount = 0
         directions = ["up","down","left" , "right" ]
         while ( len( self.movementHistory ) < effektiveMoves ):
-            print "step1:",self.movementHistory
+            print("step1:",self.movementHistory)
             self.fakeMove( directions[randint(0,3)] )
-            print "step2:",self.movementHistory
+            print("step2:",self.movementHistory)
             indexnumber = self.movementHistory.index(self.movementHistory[-1])
-            print "index:", indexnumber
+            print("index:", indexnumber)
             while len(self.movementHistory) > indexnumber+1:
-                print self.movementHistory.pop()
+                print(self.movementHistory.pop())
             
         while (not "None" in self.movementHistory[-1]):
             self.movementHistory.pop()
         
-        print len(self.movementHistory),self.movementHistory[-1]
+        print(len(self.movementHistory),self.movementHistory[-1])
         return self.createLevelFromHistory(self.movementHistory)
         
         
@@ -62,7 +62,7 @@ class LevelGenerator:
         newPositionString = str(x1)+"_"+str(y1)+"_"+str(x2)+"_"+str(y2)  # looks like 12_5_None_None 
         self.cubeTiles= [x1,y1,x2,y2]
         self.movementHistory.append(newPositionString)
-        print "new move was successful", self.cubeTiles
+        print("new move was successful", self.cubeTiles)
     
     
     def fakeMoveTest(self, x1,y1,x2=None,y2=None ):
@@ -77,7 +77,7 @@ class LevelGenerator:
         fakes the rotation of the cube.
         """
         x1,y1,x2,y2 = self.getCubeTiles()
-        print  "current position", x1,y1,x2,y2 
+        print("current position", x1,y1,x2,y2) 
         if self.cubeTiles[2] == None :
             #case1 : cube is standing upright
  

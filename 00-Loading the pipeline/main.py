@@ -13,11 +13,13 @@ alternative ways in the other included files.
 import sys
 from direct.showbase.ShowBase import ShowBase
 
+
 class Application(ShowBase):
 
     def __init__(self):
-        # Notice that you must not call ShowBase.__init__ (or super), the render
-        # pipeline does that for you.
+        # Notice that you must not call ShowBase.__init__ (or super), the
+        # render pipeline does that for you. If this is unconvenient for you,
+        # have a look at the other initialization possibilities.
 
         # Insert the pipeline path to the system path, this is required to be
         # able to import the pipeline classes. In case you placed the render
@@ -25,8 +27,8 @@ class Application(ShowBase):
         sys.path.insert(0, "../../")
         sys.path.insert(0, "../../RenderPipeline")
 
-        # Import render pipeline classes
-        from rpcore import RenderPipeline, SpotLight
+        # Import the main render pipeline class
+        from rpcore import RenderPipeline
 
         # Construct and create the pipeline
         self.render_pipeline = RenderPipeline()

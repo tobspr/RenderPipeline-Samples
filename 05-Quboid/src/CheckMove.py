@@ -25,19 +25,19 @@ def checkMove(level, pos , sounds = None):
     """
     
     if tile1.isEmpty() == True:
-        print "you lost!"
+        print("you lost!")
         return 1   
     
     if x2 != None and tile2.isEmpty() == True :  #means. if there is supposed to be a tile under the cube but there is none..
-        print "you lost!..once more"
+        print("you lost!..once more")
         return 1
     
     if tile1.getTag("Type") == "weaktile" and tile2 == None :
-        print "loosing due to broken weaktile"
+        print("loosing due to broken weaktile")
         return 1
     
     if tile1.getTag("Type") == "goal" and x2 == None:
-        print "you won, switching to next level!"
+        print("you won, switching to next level!")
         return 2
     
     else:

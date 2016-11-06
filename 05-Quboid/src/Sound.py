@@ -20,7 +20,7 @@ class Sounds(object):
             self.soundDict[sound[0]].setVolume(sound[1])
     
     def playSound(self,soundname):
-        if self.soundDict.has_key(soundname):
+        if soundname in self.soundDict:
             self.soundDict[soundname].play()
         else:
-            print "sound not found",soundname
+            print("sound not found",soundname)

@@ -51,7 +51,7 @@ class GUI(object):
 
 
     def set_stage(self, stage_nr):
-        print("Setting stage", stage_nr)
+        print(("Setting stage", stage_nr))
 
         Sequence(
             LerpColorScaleInterval(self.text_stage_np, 0.4, Vec4(1, 1, 1, 0), Vec4(1), blendType="easeInOut"),

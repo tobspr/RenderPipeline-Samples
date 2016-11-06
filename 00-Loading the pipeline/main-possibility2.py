@@ -1,7 +1,7 @@
 """
 
-This is an alternative possibility of initializing the RenderPipeline, which enables
-you to construct the show base object yourself.
+This is an alternative possibility of initializing the RenderPipeline, which
+makes it possible to construct the ShowBase object manually
 
 """
 
@@ -15,11 +15,13 @@ sys.path.insert(0, "../../RenderPipeline")
 sys.path.insert(0, "../../")
 
 # Import render pipeline classes
-from rpcore import RenderPipeline, SpotLight
+from rpcore import RenderPipeline
 
 # Construct and create the pipeline
 render_pipeline = RenderPipeline()
 render_pipeline.pre_showbase_init()
+
+# Construct and create the ShowBase
 base = ShowBase()
 render_pipeline.create(base)
 

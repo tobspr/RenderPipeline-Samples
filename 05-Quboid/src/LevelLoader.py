@@ -20,8 +20,8 @@ from direct.interval.MetaInterval import Sequence
 from random import random
 from panda3d.core import AmbientLight,DirectionalLight
 from panda3d.core import RigidBodyCombiner
-from Sound import *
-from LevelGenerator import LevelGenerator
+from .Sound import *
+from .LevelGenerator import LevelGenerator
 from panda3d.core import OmniBoundingVolume
 
 class Level:
@@ -30,7 +30,7 @@ class Level:
         self.sounds = Sounds()
         self.loadBackground()
         self.levelGen = LevelGenerator()
-        print "initializing levelnode"
+        print("initializing levelnode")
         self.LevelNr = 0
         
     def loadBackground(self,background="./models/surrounding/Scene.bam"):
@@ -50,13 +50,13 @@ class Level:
             self.LevelNr +=1
         else:
             self.LevelNr = levelnr
-        print "trying to load level nr:",self.LevelNr
+        print("trying to load level nr:",self.LevelNr)
         #handle unloading of the map here.
         try: 
             tiles = self.levelNode.findAllMatches("=Pos")
         except:
             tiles = []
-            print "no tiles for removal found"
+            print("no tiles for removal found")
         for tile in tiles:
             x,y,z = self.getPosFromTile(tile)
             self.stopAnimatedTile(x,y)
@@ -65,14 +65,14 @@ class Level:
         try:
             self.levelNode.remove_node()
         except:
-            print "failed to remove old level node.. maybe there was none?"
+            print("failed to remove old level node.. maybe there was none?")
         
-        print "loading level...."
+        print("loading level....")
         
         try:
             data=open("./levels/level_"+str(self.LevelNr)).read()
         except:
-            print "sorry, failed to load mapfile level"+str(self.LevelNr)
+            print("sorry, failed to load mapfile level"+str(self.LevelNr))
             
             #data = self.levelGen.generateLevel()
             #print ".... level generator should kick in here.. but it's not yet ready.."   
@@ -88,7 +88,7 @@ class Level:
             
            
         self.levelNode = self.loadLevelData( data )
-        print self.levelNode, "returning levelNode"
+        print(self.levelNode, "returning levelNode")
         self.levelNode.reparentTo(render)        
         self.fadeInLevel()
         return 0
@@ -180,7 +180,7 @@ class Level:
                 tile.setPos( self.getPosFromTile(tile) )
                 tile.setZ(tile,0.00000001) #workaround for rigid body combiner so it does not assume the (0,0) tile as static
             else:
-                print "ERROR, could not load tile with data: ",tileData
+                print("ERROR, could not load tile with data: ",tileData)
         rigidNode.collect()
         inode = rigidNode.getInternalScene().node() #workaround for a boundingvolume issue with rigidbodycombiner
         inode.setBounds(OmniBoundingVolume())  #still workaround
@@ -210,14 +210,14 @@ class Level:
             x,y = int(pos[0]) , int(pos[1])
             return (x,y,0)
         else:
-            print "ERROR, supplied tile has no 'Pos' tag"
+            print("ERROR, supplied tile has no 'Pos' tag")
             return None
 
     def getStartTile(self):
         tile = self.levelNode.find("=Type=start")
         if tile.isEmpty() == True:
-            print "Start-Tile was not found.. I'm prediction an application crash within the next 50ms..."
-            print "oh.. and feel free to add propper exception handling here so we get back to some menue or so, instead of crashin"
+            print("Start-Tile was not found.. I'm prediction an application crash within the next 50ms...")
+            print("oh.. and feel free to add propper exception handling here so we get back to some menue or so, instead of crashin")
         return tile
     
     

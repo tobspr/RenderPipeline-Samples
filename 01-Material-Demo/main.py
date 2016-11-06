@@ -28,37 +28,40 @@ if not os.path.isfile(os.path.join(pipeline_path, "setup.py")):
 
 sys.path.insert(0, pipeline_path)
 
-from rpcore import RenderPipeline, SpotLight
+# Import the render pipeline class
+from rpcore import RenderPipeline
 
-# This is a helper class for better camera movement - its not really
-# a rendering element, but it included for convenience
+# This is a helper class for better camera movement - see below.
 from rpcore.util.movement_controller import MovementController
+
 
 class Application(ShowBase):
     def __init__(self):
-
-        # Setup window size, title and so on
+        # Setup window size and title
         load_prc_file_data("", """
-            win-size 1600 900
+            # win-size 1600 900
             window-title Render Pipeline - Material Sample
         """)
 
+        # Construct the render pipeline
         self.render_pipeline = RenderPipeline()
         self.render_pipeline.create(self)
-
-        # Set time of day
         self.render_pipeline.daytime_mgr.time = "19:17"
+        # self.render_pipeline.daytime_mgr.time = "12:00"
 
         # Load the scene
-        model = loader.load_model("scene/TestScene.bam")
-        model.reparent_to(render)
+        model = self.loader.load_model("scene/TestScene.bam")
+        model.reparent_to(self.render)
         self.render_pipeline.prepare_scene(model)
 
         # Enable parallax mapping on the floor
-        self.render_pipeline.set_effect(model.find("**/FloorPlane"),
+        self.render_pipeline.set_effect(
+            model.find("**/FloorPlane"),
             "effects/default.yaml", {"parallax_mapping": True}, 100)
 
-        # Initialize movement controller
+        # Initialize movement controller, this is a convenience class
+        # to provide an improved camera control compared to Panda3Ds default
+        # mouse controller.
         self.controller = MovementController(self)
         self.controller.set_initial_position_hpr(
             Vec3(-17.2912578583, -13.290019989, 6.88211250305),

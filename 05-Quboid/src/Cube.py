@@ -9,8 +9,8 @@ from panda3d.core import Vec3
 
 from functools import partial
 from random import random
-from CheckMove import *
-from Sound import *
+from .CheckMove import *
+from .Sound import *
 
 class Cube:
     def __init__(self,level):
@@ -146,7 +146,7 @@ class Cube:
         """
         #first check if we are allowed to move the block at all..
         if self.isAnimated() : 
-            print "canceling rotation of cube"
+            print("canceling rotation of cube")
             return
             
         #cleaning up from last rotation (we cant clean those up at the end of this function cause the interval needs the dummynode for rotation)
@@ -352,10 +352,10 @@ class Cube:
 
         elif checkresult == 0:
             #how lame... just a ..move..
-            print "playing sound"
+            print("playing sound")
             self.moves += 1
             self.sounds.playSound("stonerotate.wav")
-        print "moves:",self.moves ,"  falls:",self.falls
+        print("moves:",self.moves ,"  falls:",self.falls)
         #last but not least.. we start the animation .. did you know that the pc knows you'r failing before you actually do? .. scary..
         anim.start()
 

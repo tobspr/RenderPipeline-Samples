@@ -6,27 +6,41 @@ This is the default roaming ralph sample, with the render pipeline.
 Using the render pipeline is only the matter of a few lines, which have
 been explicitely marked.
 
+NOTICE: Since this is a straight copy of the standard roaming ralph sample,
+        this attempts to keep as close to the original code to make it easier
+        to see where to load the render pipeline.
+
+        If you find a bug/suggestion in this code, then you should report
+        that to the sample included in Panda3D, and not this code.
+
+        (and yeah, this code could surely be written in a much nicer way)
+
 """
 
-from panda3d.core import CollisionTraverser,CollisionNode
-from panda3d.core import CollisionHandlerQueue,CollisionRay
-from panda3d.core import Filename,AmbientLight,DirectionalLight
-from panda3d.core import PandaNode,NodePath,Camera,TextNode
-from panda3d.core import Vec3,Vec4,BitMask32, load_prc_file, load_prc_file_data
+import os
+import sys
+
+from panda3d.core import CollisionTraverser, CollisionNode
+from panda3d.core import CollisionHandlerQueue, CollisionRay
+from panda3d.core import AmbientLight, DirectionalLight
+from panda3d.core import PandaNode, NodePath, TextNode
+from panda3d.core import Vec3, Vec4, BitMask32, load_prc_file_data
 from direct.gui.OnscreenText import OnscreenText
 from direct.actor.Actor import Actor
 from direct.showbase.ShowBase import ShowBase
-import random, sys, os, math
+
 
 # Switch into the current directory
 os.chdir(os.path.realpath(os.path.dirname(__file__)))
 
 SPEED = 0.5
 
+
 # Function to put instructions on the screen.
 def addInstructions(pos, msg):
-    return OnscreenText(text=msg, style=1, fg=(1,1,1,1),
+    return OnscreenText(text=msg, style=1, fg=(1, 1, 1, 1),
                         pos=(-0.9, pos - 0.2), align=TextNode.ALeft, scale=.035)
+
 
 class World(ShowBase):
 
@@ -34,8 +48,8 @@ class World(ShowBase):
 
         # Setup window size, title and so on
         load_prc_file_data("", """
-        win-size 1600 900
-        window-title Render Pipeline - Roaming Ralph Demo
+            win-size 1600 900
+            window-title Render Pipeline - Roaming Ralph Demo
         """)
 
         # ------ Begin of render pipeline code ------
