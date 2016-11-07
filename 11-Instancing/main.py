@@ -63,6 +63,7 @@ class Application(ShowBase):
         matrices = []
         for elem in model.find_all_matches("**/PREFAB*"):
             matrices.append(elem.get_mat(self.render))
+            elem.remove_node()
 
         print("Loaded", len(matrices), "instances!")
 
