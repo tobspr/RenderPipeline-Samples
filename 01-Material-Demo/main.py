@@ -52,12 +52,13 @@ class Application(ShowBase):
         # Load the scene
         model = self.loader.load_model("scene/TestScene.bam")
         model.reparent_to(self.render)
+
         self.render_pipeline.prepare_scene(model)
 
         # Enable parallax mapping on the floor
-        self.render_pipeline.set_effect(
-            model.find("**/FloorPlane"),
-            "effects/default.yaml", {"parallax_mapping": True}, 100)
+        # self.render_pipeline.set_effect(
+        #     model.find("**/FloorPlane"),
+        #     "effects/default.yaml", {"parallax_mapping": True}, 100)
 
         # Initialize movement controller, this is a convenience class
         # to provide an improved camera control compared to Panda3Ds default
